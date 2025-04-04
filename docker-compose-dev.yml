@@ -1,0 +1,34 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: postgres
+    environment:
+      - POSTGRES_PASSWORD=123456
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=axenix
+      - TZ=Europe/Moscow
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - general
+    ports:
+      - "5432:5432"
+    restart: always
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres_data:
+  redis_data:
+  es_data:
+  logs:
+  promtail_positions:
+
+networks:
+  general:
+    driver: bridge
+
+
