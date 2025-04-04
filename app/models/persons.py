@@ -50,7 +50,8 @@ class Persons(Base):
         if products != []:
             rand_products = random.choice(products)
             new_person.target_product = rand_products.name
-        new_person.target_product = None
+        else:
+            new_person.target_product = None
         session.add(new_person)
         await session.commit()
         return new_person
