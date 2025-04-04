@@ -40,6 +40,8 @@ class Products(Base):
     x: Mapped[float] = mapped_column(Numeric(10, 2))
     y: Mapped[float] = mapped_column(Numeric(10, 2))
     z: Mapped[float] = mapped_column(Numeric(10, 2))
+    
+    
     map: Mapped['Maps'] = relationship('Maps', back_populates='products', uselist=False)
     
     @staticmethod

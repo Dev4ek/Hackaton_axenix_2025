@@ -28,17 +28,16 @@ from typing import TYPE_CHECKING
 from datetime import datetime, timedelta
 
 if TYPE_CHECKING:
-    from app.models import Products
+    from app.models import Maps
 
 class Persons(Base):
     __tablename__ = "persons"
 
     id: Mapped[int] = mapped_column(Integer, autoincrement=True, index=True, primary_key=True)
-    product_id: Mapped[int] = mapped_column(Integer, ForeignKey("products.id"))
-                                            
+    map_id: Mapped[int] = mapped_column(Integer, ForeignKey("products.id"))
     preferences: Mapped[List[str]] = mapped_column(JSON)
-    history_coordinates: Mapped[List[str]] = mapped_column(JSON)
-
-    product: Mapped['Products'] = relationship('Products', back_populates='persons', uselist=False)
+    history_coordinates: Mapped[List[str]] = mapped_column(JSON) # Пример: ['x', 'y', 'z', 'время']
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default='now()')    
+
+    map: Mapped['Maps'] = relationship('Maps', back_populates='persons', uselist=False)
     
