@@ -35,7 +35,6 @@ services:
       - logs:/backend/logs
     depends_on:
       - postgres
-      - redis
     networks:
       - general
 
