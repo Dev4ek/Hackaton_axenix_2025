@@ -34,14 +34,11 @@ class Persons(Base):
     __tablename__ = "persons"
 
     id: Mapped[int] = mapped_column(Integer, autoincrement=True, index=True, primary_key=True)
-    
-    x: Mapped[int] = mapped_column(Integer)
-    y: Mapped[int] = mapped_column(Integer)
-    z: Mapped[int] = mapped_column(Integer)
+    product_id: Mapped[int] = mapped_column(Integer, ForeignKey("products.id"))
+                                            
     preferences: Mapped[List[str]] = mapped_column(JSON)
-    history_cor: Mapped[List[str]] = mapped_column(JSON)
+    history_coordinates: Mapped[List[str]] = mapped_column(JSON)
 
-    products: Mapped[List['Products']] = relationship('Products', back_populates='map')
+    product: Mapped['Products'] = relationship('Products', back_populates='persons', uselist=False)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default='now()')    
-    
     

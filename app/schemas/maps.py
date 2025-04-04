@@ -20,8 +20,6 @@ class MapCreate(BaseModel):
         example=15
     )
     
-    
-    
 
 class MapOutput(BaseModel):
     id: int
