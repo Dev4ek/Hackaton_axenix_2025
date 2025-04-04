@@ -36,10 +36,10 @@ class Persons(Base):
     __tablename__ = "persons"
 
     id: Mapped[int] = mapped_column(Integer, autoincrement=True, index=True, primary_key=True)
-    map_id: Mapped[int] = mapped_column(Integer, ForeignKey("products.id"))
+    map_id: Mapped[int] = mapped_column(Integer, ForeignKey("maps.id"))
     target_product: Mapped[Optional[str]] = mapped_column(String, nullable=True)
-    preferences: Mapped[List[str]] = mapped_column(JSON) # Пример: ['Любит скидки']
-    history_coordinates: Mapped[List[str]] = mapped_column(JSON) # Пример: ['x', 'y', 'z', 'время']
+    preferences: Mapped[List[str]] = mapped_column(JSON, default=[], server_default='[]') # Пример: ['Любит скидки']
+    history_coordinates: Mapped[List[str]] = mapped_column(JSON, default=[], server_default='[]') # Пример: ['x', 'y', 'z', 'время']
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default='now()')    
 
     map: Mapped['Maps'] = relationship('Maps', back_populates='persons', uselist=False)

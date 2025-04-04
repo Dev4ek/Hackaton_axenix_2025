@@ -8,21 +8,12 @@ class PersonCreate(BaseModel):
         title="Идентификатор карты",
         example=1,
     )
-    target_product: Optional[str] = Field(
-        None,
-        title="Цель покупки продукта",
-        example="Молоко"
-    )
     preferences: Optional[List[str]] = Field(
         [],
         title="Предпочтения",
         example=["Молоко", "Хлеб"]
     )
-    history_coordinates: Optional[List[str]] = Field(
-        None,
-        title="История кординат",
-        example=["1, 2, 5.4, 5032"]
-    )
+
     
    
     

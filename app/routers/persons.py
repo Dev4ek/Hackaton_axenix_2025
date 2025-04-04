@@ -28,8 +28,6 @@ async def create_person(
     session: SessionDep,
     payload: persons_schemas.PersonCreate,
 ):
-    ...
-    return
     person = await Persons.create(session, payload)
     return person
 @router_persons.get(
@@ -40,8 +38,6 @@ async def get_person(
     session: SessionDep,
     person_id: int,
 ):
-    ...
-    return
     person = await Persons.get_by_id(session, person_id)
     if not person:
         raise HTTPException(status_code=404, detail="Люди не найдены")
@@ -56,8 +52,6 @@ async def get_persons_by_map(
     session: SessionDep,
     map_id: int,
 ):
-    ...
-    return
     persons = await Persons.get_by_map_id(session, map_id)
     if not persons:
         raise HTTPException(status_code=404, detail="Люди не найдены")

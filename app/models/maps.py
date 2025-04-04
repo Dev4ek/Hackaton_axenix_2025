@@ -37,8 +37,8 @@ class Maps(Base):
     name: Mapped[str] = mapped_column(String(100))
     x: Mapped[int] = mapped_column(Integer)
     z: Mapped[int] = mapped_column(Integer)
-
-    persons: Mapped[List['Persons']] = relationship('Persons', back_populates="map")
+    
+    persons: Mapped[List["Persons"]] = relationship("Persons", back_populates="map")
     products: Mapped[List['Products']] = relationship('Products', back_populates='map')
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default='now()')    
     
