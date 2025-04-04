@@ -35,9 +35,14 @@ class Persons(Base):
 
     id: Mapped[int] = mapped_column(Integer, autoincrement=True, index=True, primary_key=True)
     map_id: Mapped[int] = mapped_column(Integer, ForeignKey("products.id"))
-    preferences: Mapped[List[str]] = mapped_column(JSON)
+    
+    target_product: Mapped[Optional[str]] = mapped_column(String, nullable=True)
+    
+    preferences: Mapped[List[str]] = mapped_column(JSON) # Пример: ['Любит скидки']
     history_coordinates: Mapped[List[str]] = mapped_column(JSON) # Пример: ['x', 'y', 'z', 'время']
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default='now()')    
 
     map: Mapped['Maps'] = relationship('Maps', back_populates='persons', uselist=False)
     
+    @staticmethod
+    async def create(session: AsyncSession, payload: main_schemas.PersonCreate) -> "Persons":

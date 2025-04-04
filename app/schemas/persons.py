@@ -3,23 +3,13 @@ from typing import List, Optional
 from pydantic import BaseModel, Field, EmailStr
 
 class PersonCreate(BaseModel):
-    x: int = Field(
-       ...,
-        title="Координата X",
-        example=20
-    )
-    y: int = Field(
+    map_id: int = Field(
         ...,
-        title="Координата Y",
-        example=30
-    )
-    z: int = Field(
-        ...,
-        title="Координата Z",
-        example=40
+        title="Идентификатор карты",
+        example=1,
     )
     preferences: Optional[List[str]] = Field(
-        None,
+        [],
         title="Предпочтения",
         example=["Молоко", "Хлеб"]
     )
