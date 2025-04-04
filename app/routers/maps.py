@@ -3,7 +3,7 @@ from fastapi import APIRouter, HTTPException, Query, Request, Response, status, 
 from fastapi.responses import JSONResponse
 from app.models import Maps
 from app.dependencies import SessionDep
-from app.schemas import map as map_schemas
+from app.schemas import maps as map_schemas
 
 router_map = APIRouter(prefix="/schemas", tags=["Карты"])
 
@@ -28,7 +28,7 @@ async def create_map(
     session: SessionDep,
     payload: map_schemas.MapCreate,
 ):
-    maps = await Maps.create(session, payload.name)
+    maps = await Maps.create(session, payload)
     return maps
     
 
@@ -44,3 +44,19 @@ async def get_map(
     if not map_:
         raise HTTPException(status_code=404, detail="Карта не найдена")
     return map_
+
+
+@router_map.delete(
+    "/{map_id}",
+    status_code=204
+)
+async def delete_map(
+    session: SessionDep,
+    map_id: int,
+):
+    map_ = await Maps.get_by_id(session, map_id)
+    if not map_:
+        raise HTTPException(status_code=404, detail="Карта не найдена")
+    session.delete(map_)
+    await session.commit()
+    return Response(status_code=status.HTTP_204_NO_CONTENT)

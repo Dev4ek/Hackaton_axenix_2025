@@ -1,1 +1,1 @@
-from .map import router_map
+from .maps import router_map
