@@ -22,14 +22,19 @@ async def get_persons(
 
 @router_persons.post(
     "",
-    response_model=persons_schemas.PersonOutput
+    response_model=List[persons_schemas.PersonOutput]
 )
 async def create_person(
     session: SessionDep,
-    payload: persons_schemas.PersonCreate,
+    payload_list: List[persons_schemas.PersonCreate],
 ):
-    person = await Persons.create(session, payload)
-    return person
+    added_persons = []
+    for payload in payload_list:
+        person = await Persons.create(session, payload)
+        added_persons.append(person)
+        
+    return added_persons
+
 @router_persons.get(
     "/{person_id}",
     response_model=persons_schemas.PersonOutput
