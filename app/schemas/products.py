@@ -14,6 +14,12 @@ class ProductCreate(BaseModel):
         title="Идентификатор карты",
         example=4
     )
+    
+    color_hex: str = Field(
+        ...,
+        title="Цвет продукта в HEX формате",
+        example="#FF0000",
+    )
     x: float = Field(
         ...,
         title="Координата X",
@@ -37,6 +43,7 @@ class ProductCreate(BaseModel):
 class ProductOutput(BaseModel):
     id: int
     name: str
+    color_hex: Optional[str] = None
     x: float
     y: float
     z: float

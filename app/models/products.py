@@ -36,11 +36,10 @@ class Products(Base):
     id: Mapped[int] = mapped_column(Integer, autoincrement=True, index=True, primary_key=True)
     name: Mapped[str] = mapped_column(String(100))
     map_id: Mapped[int] = mapped_column(Integer, ForeignKey("maps.id"))
-    map_id: Mapped[int] = mapped_column(Integer, ForeignKey("maps.id"))
+    color_hex: Mapped[str] = mapped_column(String(255), nullable=True)
     x: Mapped[float] = mapped_column(Numeric(10, 2))
     y: Mapped[float] = mapped_column(Numeric(10, 2))
     z: Mapped[float] = mapped_column(Numeric(10, 2))
-    
     map: Mapped['Maps'] = relationship('Maps', back_populates='products', uselist=False)
     
     @staticmethod
