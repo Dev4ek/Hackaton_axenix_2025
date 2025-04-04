@@ -1,0 +1,111 @@
+# name: Deploy Buy Runner
+
+# on:
+#   push:
+#     branches: [ "main" ]
+
+# jobs:
+#   prepare-build:
+#     runs-on: self-hosted
+#     steps:
+#       # 1. Клонируем репозиторий
+#       - name: Checkout repository
+#         uses: actions/checkout@v4
+
+#       # 2. Проверяем, существует ли сеть, и создаём её, если нет
+#       - name: Create Docker network if not exists
+#         run: |
+#           docker network inspect general >/dev/null 2>&1 || docker network create general
+
+#       # 3. Проверяем, запущен ли контейнер с базой данных
+#       - name: Check if Postgres container is running
+#         run: |
+#           if ! docker ps --filter "name=postgres" --filter "status=running" | grep -q postgres; then
+#             echo "Postgres container is not running. Exiting."
+#             exit 1
+#           fi
+          
+#       # 4. Создаём бэкап базы данных
+#       - name: Create database backup
+#         run: |
+#           mkdir -p backups
+#           docker exec postgres pg_dump -U postgres -h localhost brawlstars > backups/brawlstars_$(date +%Y%m%d%H%M%S).sql
+
+#   deploy-fastapi:
+#     needs: prepare-build
+#     if: always()
+#     runs-on: self-hosted
+#     steps:
+
+#       # 1. Пересобираем образ FastAPI
+#       - name: Rebuild FastAPI image
+#         run: |
+#           docker compose -f docker-compose-prod.yml build fastapi
+
+          
+#       # 2. Удаляем старый контейнер FastAPI
+#       - name: Remove old FastAPI container
+#         run: |
+#           docker ps -q --filter "name=fastapi" | xargs -r docker rm -f
+
+#       # 3. Применяем миграции Alembic
+#       - name: Apply Alembic migrations
+#         run: |
+#           docker compose -f docker-compose-prod.yml run --rm fastapi alembic upgrade head
+
+#       # 4. Запускаем новый контейнер FastAPI
+#       - name: Start all containers
+#         run: |
+#           docker compose -f docker-compose-prod.yml up -d
+
+
+name: Deploy Buy Runner
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  prepare-build:
+    runs-on: self-hosted
+    steps:
+      # 1. Клонируем репозиторий
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+
+      # 1.1 Выполняем авторизацию в Docker
+      - name: Docker Login
+        run: docker login -u "dimadimatrif@gmail.com" -p "2007Av99lol"
+
+
+      # 2. Проверяем, существует ли сеть, и создаём её, если нет
+      - name: Create Docker network if not exists
+        run: |
+          docker network inspect general >/dev/null 2>&1 || docker network create general
+
+  deploy-fastapi:
+    needs: prepare-build
+    if: always()
+    runs-on: self-hosted
+    steps:
+
+      # 1. Пересобираем образ FastAPI
+      - name: Rebuild FastAPI image
+        run: |
+          docker compose -f docker-compose-prod.yml build fastapi
+
+      # 2. Удаляем старый контейнер FastAPI
+      - name: Remove old FastAPI container
+        run: |
+          docker ps -q --filter "name=fastapi" | xargs -r docker rm -f
+
+      # 3. Применяем миграции Alembic
+      - name: Apply Alembic migrations
+        run: |
+          docker compose -f docker-compose-prod.yml run --rm fastapi alembic upgrade head
+
+      # 4. Запускаем новый контейнер FastAPI
+      - name: Start all containers
+        run: |
+          docker compose -f docker-compose-prod.yml up -d

@@ -29,7 +29,8 @@ services:
       - WORKERS=2
       - HOST=0.0.0.0
     ports:
-      - "127.0.0.1:8082:8082"
+      # - "127.0.0.1:8082:8082"
+      - "8082:8082"
     volumes:
       - logs:/backend/logs
     depends_on:
