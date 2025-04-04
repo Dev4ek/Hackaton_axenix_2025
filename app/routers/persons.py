@@ -11,11 +11,16 @@ router_persons = APIRouter(prefix="/persons", tags=["Люди"])
     "",
     response_model=List[map_schemas.MapOutput]
 )
-async def get_maps(
+async def get_persons(
     session: SessionDep,
     offset: int = 0,
     limit: int = 10,
 ):
-    maps = await Persons.get_all(session, offset=offset, limit=limit)
-    return maps
+    persons = await Persons.get_all(session, offset=offset, limit=limit)
+    return persons
 
+
+@router_persons.post(
+    "",
+    response_model=
+)

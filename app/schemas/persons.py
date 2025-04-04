@@ -27,7 +27,13 @@ class PersonCreate(BaseModel):
    
     
     
-    
 
-class PersoOutput(BaseModel):
+class PersonOutput(BaseModel):
+    id: int
+    map_id: int
+    target_product: Optional[str] = Field(None)
+    preferences: Optional[List[str]] = Field([])
+    history_coordinates: Optional[List[str]] = Field([])
+    created_at: datetime = Field(default_factory=datetime.now)
+    
     
