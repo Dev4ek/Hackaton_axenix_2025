@@ -8,6 +8,11 @@ class PersonCreate(BaseModel):
         title="Идентификатор карты",
         example=1,
     )
+    target_product: Optional[str] = Field(
+        None,
+        title="Цель покупки продукта",
+        example="Молоко"
+    )
     preferences: Optional[List[str]] = Field(
         [],
         title="Предпочтения",
