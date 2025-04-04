@@ -47,8 +47,10 @@ class Persons(Base):
     async def create(session: AsyncSession, payload: person_schemas.PersonCreate) -> "Persons":
         new_person = Persons(**payload.dict())
         products = await Products.get_all(session)
-        rand_products = random.choice(products)
-        new_person.target_product = rand_products.name
+        if products != []:
+            rand_products = random.choice(products)
+            new_person.target_product = rand_products.name
+        new_person.target_product = None
         session.add(new_person)
         await session.commit()
         return new_person
