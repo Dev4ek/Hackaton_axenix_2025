@@ -1,4 +1,4 @@
-FROM python:3.13.9-alpine
+FROM python:3.13-alpine
 
 # Устанавливаем зависимости
 RUN apk add --no-cache gcc musl-dev libpq-dev
