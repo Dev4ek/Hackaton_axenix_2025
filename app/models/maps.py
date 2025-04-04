@@ -28,7 +28,7 @@ from typing import TYPE_CHECKING
 from datetime import datetime, timedelta
 
 if TYPE_CHECKING:
-    ...
+    from app.models import Products
 
 class Maps(Base):
     __tablename__ = "maps"
@@ -38,6 +38,7 @@ class Maps(Base):
     x: Mapped[int] = mapped_column(Integer)
     z: Mapped[int] = mapped_column(Integer)
 
+    products: Mapped[List['Products']] = relationship('Products', back_populates='map')
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default='now()')    
     
     @staticmethod

@@ -10,7 +10,7 @@ from fastapi.openapi.utils import get_openapi
 from sqlalchemy.orm import Session
 from fastapi.staticfiles import StaticFiles
 
-from app.routers import router_map
+from app.routers import router_maps
 
 app = FastAPI(
     title="Hackaton",
@@ -31,7 +31,7 @@ app.add_middleware(
 # app.mount("/static", StaticFiles(directory="static"), name="static")
 
 # Включение роутеров
-app.include_router(router_map)
+app.include_router(router_maps)
 
 # Обработка исключений
 @app.exception_handler(StarletteHTTPException)

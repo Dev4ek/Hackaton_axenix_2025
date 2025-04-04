@@ -5,9 +5,9 @@ from app.models import Maps
 from app.dependencies import SessionDep
 from app.schemas import maps as map_schemas
 
-router_map = APIRouter(prefix="/schemas", tags=["Карты"])
+router_maps = APIRouter(prefix="/schemas", tags=["Карты"])
 
-@router_map.get(
+@router_maps.get(
     "",
     response_model=List[map_schemas.MapOutput]
 )
@@ -20,7 +20,7 @@ async def get_maps(
     return maps
 
 
-@router_map.post(
+@router_maps.post(
     "",
     response_model=map_schemas.MapOutput
 )
@@ -32,7 +32,7 @@ async def create_map(
     return maps
     
 
-@router_map.get(
+@router_maps.get(
     "/{map_id}",
     response_model=map_schemas.MapOutput
 )
@@ -46,7 +46,7 @@ async def get_map(
     return map_
 
 
-@router_map.delete(
+@router_maps.delete(
     "/{map_id}",
     status_code=204
 )

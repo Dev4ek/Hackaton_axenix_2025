@@ -23,21 +23,46 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship, selectinload
 from app.base import Base
 from datetime import datetime
 from sqlalchemy.ext.asyncio import AsyncSession
-from app.schemas import maps as auth_schemas
 from typing import TYPE_CHECKING
 from datetime import datetime, timedelta
+from app.schemas import products as products_schemas
 
 if TYPE_CHECKING:
-    ...
+    from app.models import Maps
 
 class Products(Base):
     __tablename__ = "products"
     
     id: Mapped[int] = mapped_column(Integer, autoincrement=True, index=True, primary_key=True)
     name: Mapped[str] = mapped_column(String(100))
+    map_id: Mapped[int] = mapped_column(Integer, ForeignKey("maps.id"))
     x: Mapped[float] = mapped_column(Numeric(10, 2))
     y: Mapped[float] = mapped_column(Numeric(10, 2))
     z: Mapped[float] = mapped_column(Numeric(10, 2))
+    
+    map: Mapped['Maps'] = relationship('Maps', back_populates='products', uselist=False)
+    
+    @staticmethod
+    async def create(session: AsyncSession, payload: products_schemas.ProductCreate) -> "Products":
+        new_product = Products(**payload.dict())
+        session.add(new_product)
+        await session.commit()
+        return new_product
+    
+    @staticmethod
+    async def get_by_id(session: AsyncSession, product_id: int) -> Optional["Products"]:
+        _product = await session.get(Products, product_id) 
+        return _product
+    @staticmethod
+    async def get_all(session: AsyncSession, offset: int = 0, limit: int = 10) -> List["Products"]:
+        stmt = (
+            select(Products)
+           .order_by(Products.created_at.desc())
+           .offset(offset)
+        )
+        result = await session.execute(stmt)
+        return result.scalars().all()
+    
     
     
     
