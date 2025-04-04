@@ -28,6 +28,9 @@ async def create_product(
     session: SessionDep,
     payload: products_schemas.ProductCreate,
 ):
+    _map = Maps.get_by_id(session, payload.map_id)
+    if not _map:
+        raise HTTPException(status_code=404, detail="Карта не найдена")
     new_product = await Products.create(session, payload)
     return new_product
 
@@ -59,3 +62,17 @@ async def get_products_by_map(
     return products
 
 
+@router_products.delete(
+    "/{product_id}",
+    status_code=204
+)
+async def delete_product(
+    session: SessionDep,
+    product_id: int,
+):
+    product = await Products.get_by_id(session, product_id)
+    if not product:
+        raise HTTPException(status_code=404, detail="Продукт не найден")
+    session.delete(product)
+    await session.commit()
+    return Response(status_code=status.HTTP_204_NO_CONTENT)

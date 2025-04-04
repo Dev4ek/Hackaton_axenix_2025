@@ -9,6 +9,11 @@ class ProductCreate(BaseModel):
         example="Молоко",
         max_length=100
     )
+    map_id: int = Field(
+        ...,
+        title="Идентификатор карты",
+        example=4
+    )
     x: float = Field(
         ...,
         title="Координата X",

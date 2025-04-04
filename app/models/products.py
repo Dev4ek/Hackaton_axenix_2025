@@ -57,13 +57,18 @@ class Products(Base):
     async def get_all(session: AsyncSession, offset: int = 0, limit: int = 10) -> List["Products"]:
         stmt = (
             select(Products)
-           .order_by(Products.created_at.desc())
            .offset(offset)
+           .limit(limit)
         )
         result = await session.execute(stmt)
         return result.scalars().all()
     
-    
-    
-    
+    @staticmethod
+    async def get_by_map_id(session: AsyncSession, map_id: int) -> List["Products"]:
+        stmt = (
+            select(Products)
+           .where(Products.map_id == map_id)
+        )
+        result = await session.execute(stmt)
+        return result.scalars().all()
     

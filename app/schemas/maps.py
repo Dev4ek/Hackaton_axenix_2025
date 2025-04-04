@@ -9,11 +9,6 @@ class MapCreate(BaseModel):
         example="Пятерочка",
         max_length=100
     )
-    map_id: int = Field(
-        ...,
-        title="Идентификатор карты",
-        example=4
-    )
     x: int = Field(
         ...,
         title="Координата X",
@@ -31,7 +26,6 @@ class MapCreate(BaseModel):
 class MapOutput(BaseModel):
     id: int
     name: str
-    map_id: int
     x: int
     z: int
     created_at: datetime

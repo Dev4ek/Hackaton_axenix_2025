@@ -5,7 +5,7 @@ from app.models import Maps
 from app.dependencies import SessionDep
 from app.schemas import maps as map_schemas
 
-router_maps = APIRouter(prefix="/schemas", tags=["Карты"])
+router_maps = APIRouter(prefix="/maps", tags=["Карты"])
 
 @router_maps.get(
     "",
