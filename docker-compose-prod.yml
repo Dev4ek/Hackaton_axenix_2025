@@ -30,8 +30,6 @@ services:
     ports:
       # - "127.0.0.1:8082:8082"
       - "8082:8082"
-    volumes:
-      - logs:/backend/logs
     depends_on:
       - postgres
     networks:
