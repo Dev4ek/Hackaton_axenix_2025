@@ -3,7 +3,7 @@ services:
     image: postgres:16-alpine
     container_name: postgres
     environment:
-      - POSTGRES_PASSWORD=0ffd4c0d93883b0b6ccd295ab193
+      - POSTGRES_PASSWORD=123456
       - POSTGRES_USER=postgres
       - POSTGRES_DB=axenix
       - TZ=Europe/Moscow
@@ -43,8 +43,8 @@ services:
     container_name: pgadmin
     restart: always
     environment:
-      PGADMIN_DEFAULT_EMAIL: kfjqeqrwNa4@gmail.com
-      PGADMIN_DEFAULT_PASSWORD: kfjqeqrwNa4@gmail.com
+      PGADMIN_DEFAULT_EMAIL: 123456666@gmail.com
+      PGADMIN_DEFAULT_PASSWORD: 123456666@gmail.com
     ports:
       - "8080:80"
     depends_on:
