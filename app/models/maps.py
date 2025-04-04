@@ -23,7 +23,7 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship, selectinload
 from app.base import Base
 from datetime import datetime
 from sqlalchemy.ext.asyncio import AsyncSession
-from app.schemas import map as auth_schemas
+from app.schemas import maps as auth_schemas
 from typing import TYPE_CHECKING
 from datetime import datetime, timedelta
 
@@ -35,6 +35,8 @@ class Maps(Base):
 
     id: Mapped[int] = mapped_column(Integer, autoincrement=True, index=True, primary_key=True)
     name: Mapped[str] = mapped_column(String(100))
+    x: Mapped[int] = mapped_column(Integer)
+    y: Mapped[int] = mapped_column(Integer)
 
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default='now()')    
     
