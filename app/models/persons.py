@@ -26,8 +26,9 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.schemas import persons as person_schemas
 from typing import TYPE_CHECKING
 from datetime import datetime, timedelta
-from products import Products
 import random
+from app.models import Products
+
 if TYPE_CHECKING:
     from app.models import Maps
 
