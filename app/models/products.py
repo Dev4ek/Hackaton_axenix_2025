@@ -53,6 +53,7 @@ class Products(Base):
     async def get_by_id(session: AsyncSession, product_id: int) -> Optional["Products"]:
         _product = await session.get(Products, product_id) 
         return _product
+    
     @staticmethod
     async def get_all(session: AsyncSession, offset: int = 0, limit: int = 10) -> List["Products"]:
         stmt = (
