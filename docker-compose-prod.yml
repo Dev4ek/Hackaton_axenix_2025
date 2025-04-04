@@ -25,7 +25,6 @@ services:
       - SECRET_KEY=c930fcdc49a10a69bfd11b1212c4146a493fef9868c8d0cf67d29bf465dcbf53
       - SQLALCHEMY_DATABASE_URL=postgresql+asyncpg://postgres:123456@postgres/axenix
       - SQLALCHEMY_DATABASE_SYNC_URL=postgresql+psycopg://postgres:123456@postgres/axenix
-      - BROKER_URL=redis://redis:6379/0
       - WORKERS=2
       - HOST=0.0.0.0
     ports:
@@ -52,13 +51,8 @@ services:
     networks:
       - general
 
-
 volumes:
   postgres_data:
-  redis_data:
-  es_data:
-  logs:
-  promtail_positions:
 
 networks:
   general:
