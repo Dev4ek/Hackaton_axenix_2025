@@ -27,6 +27,7 @@ from app.schemas import persons as person_schemas
 from typing import TYPE_CHECKING
 from datetime import datetime, timedelta
 from products import Products
+import random
 if TYPE_CHECKING:
     from app.models import Maps
 
@@ -45,7 +46,7 @@ class Persons(Base):
     @staticmethod
     async def create(session: AsyncSession, payload: person_schemas.PersonCreate) -> "Persons":
         new_person = Persons(**payload.dict())
-        new_person.target_product = 1
+        new_person.target_product = random.choice(Products.get_all(session))
         session.add(new_person)
         await session.commit()
         return new_person
