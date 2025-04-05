@@ -18,12 +18,12 @@ class KassesBase(BaseModel):
         title="Идентификатор карты",
         example=1
     )
-    x: int = Field(
+    x: float = Field(
         ...,
         title="Координата X",
         example=20,
     )
-    z: int = Field(
+    z: float = Field(
         ...,
         title="Координата Z",
         example=15,

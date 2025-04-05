@@ -1,6 +1,7 @@
 import random
 from typing import List, Optional
 from sqlalchemy import (
+    Float,
     ForeignKey,
     String,
     Integer,
@@ -37,8 +38,8 @@ class Kasses(Base):
     id: Mapped[int] = mapped_column(Integer, autoincrement=True, index=True, primary_key=True)
     name: Mapped[str] = mapped_column(String(100))
     map_id: Mapped[int] = mapped_column(Integer, ForeignKey("maps.id"), index=True)
-    x: Mapped[int] = mapped_column(Integer)
-    z: Mapped[int] = mapped_column(Integer)
+    x: Mapped[float] = mapped_column(Float)
+    z: Mapped[float] = mapped_column(Float)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default='now()')    
     
     map: Mapped["Maps"] = relationship("Maps", back_populates="kassses")
