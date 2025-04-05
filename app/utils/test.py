@@ -12,7 +12,8 @@ class CustomerProfile(BaseModel):
     preferences: List[str]
     fears: List[str]
     shopping_list: List[str]
-    visit_time: datetime
+    budget_allocation: Dict[str, float]
+    visit_time: float
 
 
 class CustomerGenerator:
@@ -24,6 +25,16 @@ class CustomerGenerator:
                 "motives": ["удобство", "экономия", "качество продуктов для семьи"],
                 "preferences": ["Молочные продукты", "Детские товары", "Овощи"],
                 "fears": ["некачественные продукты", "мало ассортимента для детей", "высокие цены"],
+                "budget_allocation": {
+                    "Молочные продукты": 0.20,
+                    "Детские товары": 0.20,
+                    "Овощи": 0.15,
+                    "Крупы": 0.10,
+                    "Лекарства": 0.05,
+                    "Готовая еда": 0.01,
+                    "Сезонные товары": 0.01,
+                    "Перекусы": 0.01,
+                }
             },
             {
                 "name": "Работающие люди",
@@ -31,6 +42,16 @@ class CustomerGenerator:
                 "motives": ["быстрота", "доступность", "готовые решения"],
                 "preferences": ["Готовая еда", "Перекусы", "Энергетики"],
                 "fears": ["очереди", "мало готовой еды", "неудобство"],
+                "budget_allocation": {
+                    "Готовая еда": 0.35,
+                    "Перекусы": 0.25,
+                    "Энергетики": 0.20,
+                    "Молочные продукты": 0.05,
+                    "Овощи": 0.01,
+                    "Сезонные товары": 0.01,
+                    "Лекарства": 0.01,
+                    "Крупы": 0.01,
+                }
             },
             {
                 "name": "Пенсионеры",
@@ -38,6 +59,13 @@ class CustomerGenerator:
                 "motives": ["дешево", "качество", "всё в одном месте"],
                 "preferences": ["Крупы", "Молочные продукты", "Овощи"],
                 "fears": ["непонятные акции", "физические сложности", "нет скидок"],
+                "budget_allocation": {
+                    "Крупы": 0.30,
+                    "Молочные продукты": 0.25,
+                    "Овощи": 0.20,
+                    "Лекарства": 0.30,
+                    "Сезонные товары": 0.01,
+                }
             },
             {
                 "name": "Молодёжь",
@@ -45,6 +73,14 @@ class CustomerGenerator:
                 "motives": ["доступность", "снеки", "трендовые товары"],
                 "preferences": ["Экопродукты", "Перекусы", "Энергетики"],
                 "fears": ["нет новинок", "неприкольный магазин", "мало фишек"],
+                "budget_allocation": {
+                    "Экопродукты": 0.15,
+                    "Перекусы": 0.15,
+                    "Энергетики": 0.15,
+                    "Молочные продукты": 0.0,
+                    "Овощи": 0.0,
+                    "Сезонные товары": 0.0,
+                }
             },
             {
                 "name": "Люди из пригородов",
@@ -52,46 +88,93 @@ class CustomerGenerator:
                 "motives": ["закуп впрок", "низкие цены", "широкий выбор"],
                 "preferences": ["Крупы", "Бытовая химия", "Овощи"],
                 "fears": ["дорого", "мало товара", "нет доставки"],
+                "budget_allocation": {
+                    "Крупы": 0.35,
+                    "Бытовая химия": 0.15,
+                    "Овощи": 0.20,
+                    "Молочные продукты": 0.10,
+                    "Лекарства": 0.05,
+                    "Готовая еда": 0.02,
+                    "Сезонные товары": 0.10,
+                }
             },
         ]
 
         self.product_categories = {
-            "Молочные продукты": {"weight": 1.0, "products": ["молоко", "сыр", "творог", "сливки", "йогурты"]},
-            "Овощи": {"weight": 0.8, "products": ["картофель", "помидоры", "огурцы", "капуста", "морковь"]},
-            "Крупы": {"weight": 0.6, "products": ["гречка", "рис", "пшено", "овсянка", "макароны"]},
-            "Бытовая химия": {"weight": 0.5, "products": ["моющее средство", "чистящие средства", "моющее для посуды", "стиральный порошок"]},
-            "Лекарства": {"weight": 0.3, "products": ["парацетамол", "ибупрофен", "аспирин", "витамины", "противогриппозные средства"]},
-            "Готовая еда": {"weight": 0.9, "products": ["пельмени", "картопляники", "замороженные пиццы", "готовые супы"]},
-            "Перекусы": {"weight": 0.7, "products": ["снэки", "чипсы", "батончики", "орехи", "сухофрукты"]},
-            "Энергетики": {"weight": 0.4, "products": ["энергетики", "кофе в банках", "чай в бутылках"]},
-            "Фрукты": {"weight": 0.8, "products": ["яблоки", "бананы", "груши", "апельсины", "киви"]},
-            "Детские товары": {"weight": 0.6, "products": ["пюре детское", "подгузники", "корм для детей", "соски", "бутылочки"]},
+            "Молочные продукты": {"weight": 1.0, "products": [
+                "молоко", "сыр", "творог", "сливки", "йогурты",
+                "сметана", "кефир", "ряженка", "топлёное молоко"
+            ]},
+            "Овощи": {"weight": 0.8, "products": [
+                "картофель", "помидоры", "огурцы", "капуста", "морковь",
+                "свёкла", "лук", "чеснок", "перец", "кабачки"
+            ]},
+            "Крупы": {"weight": 0.6, "products": [
+                "гречка", "рис", "пшено", "овсянка", "макароны",
+                "ячневая крупа", "перловка", "булгур", "кускус"
+            ]},
+            "Бытовая химия": {"weight": 0.5, "products": [
+                "моющее средство", "чистящие средства", "стиральный порошок",
+                "освежитель воздуха", "губки", "щётки", "бумажные полотенца"
+            ]},
+            "Лекарства": {"weight": 0.3, "products": [
+                "парацетамол", "ибупрофен", "аспирин", "витамины",
+                "противогриппозные средства", "капли от насморка", "пластыри", "бинты"
+            ]},
+            "Готовая еда": {"weight": 0.9, "products": [
+                "пельмени", "замороженные пиццы", "готовые супы",
+                "котлеты", "блины", "чебуреки", "шаурма", "роллы"
+            ]},
+            "Перекусы": {"weight": 0.7, "products": [
+                "снэки", "чипсы", "батончики", "орехи", "сухофрукты",
+                "попкорн", "печенье", "вяленое мясо"
+            ]},
+            "Энергетики": {"weight": 0.4, "products": [
+                "энергетики", "кофе в банках", "чай в бутылках", "ледяной кофе", "газировка"
+            ]},
+            "Фрукты": {"weight": 0.8, "products": [
+                "яблоки", "бананы", "груши", "апельсины", "киви",
+                "виноград", "мандарины", "ананас", "манго", "гранат"
+            ]},
+            "Детские товары": {"weight": 0.6, "products": [
+                "пюре детское", "подгузники", "корм для детей",
+                "соски", "бутылочки", "детские каши", "влажные салфетки"
+            ]},
+            "Экопродукты": {"weight": 0.7, "products": [
+                "соевое молоко", "миндальное молоко", "гречневая лапша",
+                "растительный йогурт", "тофу", "эко-крупы", "натуральные соки"
+            ]},
+            "Сезонные товары": {"weight": 0.2, "products": [
+                "арбуз", "клубника", "черешня", "шампуры", "уголь", "новогодние украшения",
+                "елочные игрушки", "пасхальные яйца", "снегокат"
+            ]}
         }
 
-    def add_category(self, category_name: str, products: List[str], weight: float):
-        """Добавляет новую категорию с весом и товарами в продуктовый словарь."""
-        self.product_categories[category_name] = {"weight": weight, "products": products}
-        # Обновляем preferences клиентов с учётом новой категории
-        for segment in self.segments:
-            if category_name not in segment["preferences"]:
-                segment["preferences"].append(category_name)
+    def generate_preferences(self, segment, budget):
+        preferences = []
+        for category, allocation in budget.items():
+            # Если выделение бюджета маленькое, уменьшаем вероятность добавления товаров
+            if allocation < 0.05:
+                continue
+            # Введение случайности в распределение товаров
+            variance = random.uniform(0.8, 1.2)  
+            adjusted_allocation = allocation * variance
 
-    def add_product_to_category(self, category_name: str, product_name: str):
-        """Добавляет новый товар в существующую категорию."""
-        if category_name in self.product_categories:
-            self.product_categories[category_name]["products"].append(product_name)
-            # Обновляем preferences клиентов с учётом нового товара в категории
-            for segment in self.segments:
-                if category_name in segment["preferences"]:
-                    if product_name not in segment["preferences"]:
-                        segment["preferences"].append(product_name)
-        else:
-            print(f"Категория {category_name} не существует.")
+            if category in segment["preferences"]:
+                # Увеличиваем вероятность выбора продуктов из предпочтений
+                products = self.product_categories[category]["products"]
+                count_products = max(1, int(adjusted_allocation * len(products)))
+                preferences += random.sample(products, k=min(count_products, len(products)))
+            else:
+                # Уменьшаем вероятность выбора товаров из непреоритетных категорий
+                products = self.product_categories[category]["products"]
+                count_products = max(1, int(adjusted_allocation * len(products) * 0.5))  # Меньше товаров
+                preferences += random.sample(products, k=min(count_products, len(products)))
+
+        return preferences
 
     def generate_customers(self, count: int) -> List[CustomerProfile]:
         customers = []
-        base_time = datetime.now().replace(hour=9, minute=0)
-
         for i in range(count):
             segment = random.choice(self.segments)
             age = random.randint(*segment["age_range"])
@@ -99,26 +182,15 @@ class CustomerGenerator:
             motives = random.sample(segment["motives"], k=min(2, len(segment["motives"])))
             fears = random.sample(segment["fears"], k=min(2, len(segment["fears"])))
 
-            # Генерация предпочтений на основе веса категорий
-            preferences = []
-            category_weights = {k: v["weight"] for k, v in self.product_categories.items()}
-            preferred_categories = random.choices(
-                list(category_weights.keys()), 
-                weights=list(category_weights.values()), 
-                k=3
-            )
-            
-            # Добавляем товары из выбранных категорий
-            for category in preferred_categories:
-                if category in segment["preferences"]:
-                    products = self.product_categories[category]["products"]
-                    preferences += random.sample(products, k=2)  # Выбираем 2 случайных товара из категории
+            # Генерация предпочтений с учетом перераспределения бюджета
+            preferences = self.generate_preferences(segment, segment["budget_allocation"])
 
-            # Генерация покупок с учётом предпочтений
-            shopping_list = preferences.copy()
+            # Добавляем случайность в список покупок, чтобы товары были более разнообразными
+            shopping_list_size = random.randint(5, 12)  # Ограничиваем размер списка
+            shopping_list = random.sample(preferences, k=min(len(preferences), shopping_list_size))
 
-            # Время прихода с интервалами по 3-10 минут
-            visit_time = base_time + timedelta(minutes=random.randint(3 * i, 10 * (i + 1)))
+            # Время прихода: случайное время от 9:00 до 21:00 в секундах
+            visit_seconds = random.randint(9 * 3600, 21 * 3600)
 
             customer = CustomerProfile(
                 name=name,
@@ -128,22 +200,18 @@ class CustomerGenerator:
                 preferences=preferences,
                 fears=fears,
                 shopping_list=shopping_list,
-                visit_time=visit_time
+                budget_allocation=segment["budget_allocation"],
+                visit_time=visit_seconds
             )
             customers.append(customer)
 
         return customers
 
 
-if __name__ == "__main__":
-    generator = CustomerGenerator()
+# Генерация 20 клиентов
+generator = CustomerGenerator()
+customers = generator.generate_customers(20)
 
-    # Пример добавления новой категории и товара
-    generator.add_category("Замороженные продукты", ["мороженое", "замороженные овощи", "пельмени"], 0.7)
-    generator.add_product_to_category("Замороженные продукты", "замороженная рыба")
-
-    # Генерация клиентов с учётом новых данных
-    clients = generator.generate_customers(count=5)
-
-    for c in clients:
-        print(c)
+# Выводим данные клиентов
+for customer in customers:
+    print(customer)
