@@ -19,7 +19,6 @@ async def get_all(
     maps = await Products.get_all(session, offset=offset, limit=limit)
     return maps
 
-
 @router_products.post(
     "",
     response_model=products_schemas.ProductOutput
