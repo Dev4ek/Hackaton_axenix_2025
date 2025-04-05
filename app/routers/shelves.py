@@ -31,7 +31,7 @@ async def get_shelves(
     return shelves
 
 
-@router_shelves.get("/maps/{map_id}", response_model=List[shelves_schemas.ShelfOutput])
+@router_shelves.get("/maps/{map_id}", response_model=List[shelves_schemas.ShelfProducts])
 async def get_shelves_by_map(
     session: SessionDep,
     map_id: int

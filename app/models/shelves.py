@@ -69,7 +69,11 @@ class Shelves(Base):
     @staticmethod
     async def get_by_map_id(session, map_id: int):
         from sqlalchemy import select
-        stmt = select(Shelves).where(Shelves.map_id == map_id)
+        stmt = (
+            select(Shelves)
+            .where(Shelves.map_id == map_id)
+            .options(selectinload(Shelves.products))
+        )
         result = await session.execute(stmt)
         return result.scalars().all()
 
