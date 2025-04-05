@@ -44,4 +44,4 @@ class ProductOutput(BaseModel):
     x: float
     y: float
     z: float
-    
+   

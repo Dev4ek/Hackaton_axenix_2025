@@ -1,6 +1,7 @@
 import random
 from typing import List, Optional
 from sqlalchemy import (
+    Float,
     ForeignKey,
     String,
     Integer,
@@ -37,9 +38,9 @@ class Products(Base):
     name: Mapped[str] = mapped_column(String(100))
     map_id: Mapped[int] = mapped_column(Integer, ForeignKey("maps.id"))
     color_hex: Mapped[str] = mapped_column(String(255), nullable=True)
-    x: Mapped[float] = mapped_column(Numeric(10, 2))
-    y: Mapped[float] = mapped_column(Numeric(10, 2))
-    z: Mapped[float] = mapped_column(Numeric(10, 2))
+    x: Mapped[float] = mapped_column(Float)
+    y: Mapped[float] = mapped_column(Float)
+    z: Mapped[float] = mapped_column(Float)
     
     map: Mapped['Maps'] = relationship('Maps', back_populates='products', uselist=False)
     
