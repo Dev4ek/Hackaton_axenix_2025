@@ -61,3 +61,18 @@ async def get_persons_by_map(
     if not persons:
         raise HTTPException(status_code=404, detail="Люди не найдены")
     return persons
+
+@router_persons.delete(
+    "/{person_id}",
+    status_code=204
+)
+async def delete_person(
+    session: SessionDep,
+    person_id: int,
+):
+    person = await Persons.get_by_id(session, person_id)
+    if not person:
+        raise HTTPException(status_code=404, detail="Люди не найдены")
+    session.delete(person)
+    await session.commit()
+    return Response(status_code=status.HTTP_204_NO_CONTENT)
