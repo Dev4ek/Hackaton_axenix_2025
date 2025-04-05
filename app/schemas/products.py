@@ -24,19 +24,16 @@ class ProductCreate(BaseModel):
         ...,
         title="Координата X",
         example=50.5,
-        gt=0
     )
     y: float = Field(
         ...,
         title="Координата Y",
         example=50.5,
-        gt=0
     )
     z: float = Field(
         ...,
         title="Координата Z",
         example=50.5,
-        gt=0
     )
     
     
