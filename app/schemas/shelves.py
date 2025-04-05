@@ -6,7 +6,6 @@ class ShelfBase(BaseModel):
     map_id: int
     category: str
     color_hex: str
-    capacity: int
     x: float
     y: float
     z: float
