@@ -45,6 +45,20 @@ async def get_kasses(
         raise HTTPException(status_code=404, detail="Касса не найдена")
     return kassa
 
+@router_kasses.get(
+    "/maps/{map_id}",
+    response_model=List[kasses_schemas.KassesOutput]
+)
+async def get_kasses_by_map(
+    session: SessionDep,
+    map_id: int,
+):
+    kassa = await Kasses.get_by_map_id(session, map_id)
+    if not kassa:
+        raise HTTPException(status_code=404, detail="Кассы не найдены")
+    return kassa
+
+
 @router_kasses.delete(
     "/{kassa_id}",
     status_code=204
