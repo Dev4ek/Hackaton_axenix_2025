@@ -25,6 +25,7 @@ from app.base import Base
 from datetime import datetime
 from sqlalchemy.ext.asyncio import AsyncSession
 from app.schemas import persons as person_schemas
+from app.schemas import shelves as shelves_schemas
 from typing import TYPE_CHECKING
 from datetime import datetime, timedelta
 import random
@@ -41,7 +42,6 @@ class Shelves(Base):
     map_id: Mapped[int] = mapped_column(Integer, ForeignKey("maps.id"), index=True)
     category: Mapped[str] = mapped_column(String)
     color_hex: Mapped[str] = mapped_column(String)
-    capacity: Mapped[int] = mapped_column(Integer, default=10)
     x: Mapped[float] = mapped_column(Float)
     y: Mapped[float] = mapped_column(Float)
     z: Mapped[float] = mapped_column(Float)
@@ -50,7 +50,7 @@ class Shelves(Base):
 
     products: Mapped[List["Products"]] = relationship("Products", back_populates="shelf")
     @staticmethod
-    async def create(session, shelf_data):
+    async def create(session, shelf_data: shelves_schemas.ShelfCreate):
         shelf = Shelves(**shelf_data.dict())
         session.add(shelf)
         await session.commit()
