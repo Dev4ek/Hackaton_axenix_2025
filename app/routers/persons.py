@@ -51,7 +51,7 @@ async def get_person(
 
 @router_persons.get(
     "/maps/{map_id}",
-    response_model=persons_schemas.PersonOutput
+    response_model=List[persons_schemas.PersonOutput]
 )
 async def get_persons_by_map(
     session: SessionDep,
