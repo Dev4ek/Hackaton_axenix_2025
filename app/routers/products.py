@@ -1,7 +1,7 @@
 from typing import List
 from fastapi import APIRouter, HTTPException, Query, Request, Response, status, Path
 from fastapi.responses import JSONResponse
-from app.models import Maps, Products
+from app.models import Maps, Products, Shelves
 from app.dependencies import SessionDep
 from app.schemas import products as products_schemas
 
@@ -28,12 +28,11 @@ async def create_product(
     session: SessionDep,
     payload: products_schemas.ProductCreate,
 ):
-    _map = Maps.get_by_id(session, payload.map_id)
+    _map = Shelves.get_by_id(session, payload.shelf_id)
     if not _map:
-        raise HTTPException(status_code=404, detail="Карта не найдена")
+        raise HTTPException(status_code=404, detail="Стелаж не найден")
     new_product = await Products.create(session, payload)
     return new_product
-
 
 @router_products.get(
     "/{product_id}",
@@ -47,20 +46,6 @@ async def get_product(
     if not product:
         raise HTTPException(status_code=404, detail="Продукт не найден")
     return product
-
-@router_products.get(
-    "/maps/{map_id}",
-    response_model=List[products_schemas.ProductOutput]
-)
-async def get_products_by_map(
-    session: SessionDep,
-    map_id: int,
-):
-    products = await Products.get_by_map_id(session, map_id)
-    if not products:
-        raise HTTPException(status_code=404, detail="Продукты не найдены")
-    return products
-
 
 @router_products.delete(
     "/{product_id}",

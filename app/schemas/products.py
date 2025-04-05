@@ -9,32 +9,17 @@ class ProductCreate(BaseModel):
         example="Молоко",
         max_length=100
     )
-    map_id: int = Field(
+
+    shelf_id: int = Field(
         ...,
-        title="Идентификатор карты",
-        example=4
+        title="Идентификатор стелажа",
+        example=1
     )
-    shelf_id: Optional[int] = None  # если товар лежит на стеллаже
     
     color_hex: str = Field(
         ...,
         title="Цвет продукта в HEX формате",
         example="#FF0000",
-    )
-    x: float = Field(
-        ...,
-        title="Координата X",
-        example=50.5,
-    )
-    y: float = Field(
-        ...,
-        title="Координата Y",
-        example=50.5,
-    )
-    z: float = Field(
-        ...,
-        title="Координата Z",
-        example=50.5,
     )
     
     percent_discount: Optional[int] = Field(
@@ -57,10 +42,8 @@ class ProductCreate(BaseModel):
 class ProductOutput(BaseModel):
     id: int
     name: str
+    shelf_id: int
     color_hex: Optional[str] = None
-    x: float
-    y: float
-    z: float
     percent_discount: Optional[int] = None
     time_discount_start: Optional[int] = None
     time_discount_end: Optional[int] = None

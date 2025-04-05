@@ -38,13 +38,9 @@ class Maps(Base):
     x: Mapped[int] = mapped_column(Integer)
     z: Mapped[int] = mapped_column(Integer)
     
-    time_peak_start: Mapped[int] = mapped_column(Integer)
-    time_peak_end: Mapped[int] = mapped_column(Integer)
-    
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default='now()')    
     
     persons = relationship("Persons", back_populates="map")
-    products = relationship("Products", back_populates="map")
     movements = relationship("PersonMovements", back_populates="map")
     sales = relationship("Sales", back_populates="map")
     shelves = relationship("Shelves", back_populates="map")
@@ -61,8 +57,6 @@ class Maps(Base):
         stmt = (
             select(Maps)
             .where(Maps.id == map_id)
-            .options(selectinload(Maps.persons))
-            .options(selectinload(Maps.products))
         )
         
         results = await session.execute(stmt)

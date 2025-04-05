@@ -45,20 +45,6 @@ async def get_map(
         raise HTTPException(status_code=404, detail="Карта не найдена")
     return map_
 
-@router_maps.get(
-    "/{map_id}/full",
-    response_model=map_schemas.MapFullOutput
-)
-async def get_map_full(
-    session: SessionDep,
-    map_id: int,
-):
-    map_ = await Maps.get_by_id(session, map_id)
-    if not map_:
-        raise HTTPException(status_code=404, detail="Карта не найдена")
-    return map_
-
-
 
 
 @router_maps.delete(

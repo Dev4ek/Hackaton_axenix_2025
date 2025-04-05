@@ -32,9 +32,8 @@ app.add_middleware(
 
 # Включение роутеров
 app.include_router(router_maps)
-app.include_router(router_products)
 app.include_router(router_shelves)
-app.include_router(router_persons)
+app.include_router(router_products)
 app.include_router(router_simulations)
 
 # Обработка исключений
