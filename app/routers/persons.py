@@ -73,6 +73,6 @@ async def delete_person(
     person = await Persons.get_by_id(session, person_id)
     if not person:
         raise HTTPException(status_code=404, detail="Люди не найдены")
-    session.delete(person)
+    await session.delete(person)
     await session.commit()
     return Response(status_code=status.HTTP_204_NO_CONTENT)

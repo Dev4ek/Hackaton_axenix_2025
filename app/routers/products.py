@@ -73,6 +73,6 @@ async def delete_product(
     product = await Products.get_by_id(session, product_id)
     if not product:
         raise HTTPException(status_code=404, detail="Продукт не найден")
-    session.delete(product)
+    await session.delete(product)
     await session.commit()
     return Response(status_code=status.HTTP_204_NO_CONTENT)

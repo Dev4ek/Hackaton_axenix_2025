@@ -38,8 +38,8 @@ class Maps(Base):
     x: Mapped[int] = mapped_column(Integer)
     z: Mapped[int] = mapped_column(Integer)
     
-    # time_peak_start: Mapped[datetime] = mapped_column(DateTime(timezone=True))
-    # time_peak_end: Mapped[datetime] = mapped_column(DateTime(timezone=True))
+    time_peak_start: Mapped[int] = mapped_column(Integer)
+    time_peak_end: Mapped[int] = mapped_column(Integer)
     
     persons: Mapped[List["Persons"]] = relationship("Persons", back_populates="map")
     products: Mapped[List['Products']] = relationship('Products', back_populates='map')
@@ -54,8 +54,15 @@ class Maps(Base):
     
     @staticmethod
     async def get_by_id(session: AsyncSession, map_id: int) -> Optional["Maps"]:
-        _map = await session.get(Maps, map_id) 
-        return _map
+        stmt = (
+            select(Maps)
+            .where(Maps.id == map_id)
+            .options(selectinload(Maps.persons))
+            .options(selectinload(Maps.products))
+        )
+        
+        results = await session.execute(stmt)
+        return results.scalars().first()
     
     @staticmethod
     async def get_all(session: AsyncSession, offset: int = 0, limit: int = 10) -> List["Maps"]:
@@ -66,3 +73,8 @@ class Maps(Base):
         )
         result = await session.execute(stmt)
         return result.scalars().all()
+    
+    
+    
+    
+

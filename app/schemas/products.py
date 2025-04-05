@@ -36,6 +36,22 @@ class ProductCreate(BaseModel):
         example=50.5,
     )
     
+    percent_discount: Optional[int] = Field(
+        None,
+        title="Процент скидки",
+        example=3,
+    )
+    time_discount_start: Optional[int] = Field(
+        None,
+        title="Время начала скидки",
+        example=32412,
+    )
+    time_discount_end: Optional[int] = Field(
+        None,
+        title="Время конца скидки",
+        example=48542,
+    )
+    
     
 class ProductOutput(BaseModel):
     id: int
@@ -44,4 +60,7 @@ class ProductOutput(BaseModel):
     x: float
     y: float
     z: float
+    percent_discount: Optional[int] = None
+    time_discount_start: Optional[int] = None
+    time_discount_end: Optional[int] = None
    

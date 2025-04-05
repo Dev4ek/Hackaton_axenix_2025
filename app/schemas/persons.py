@@ -15,9 +15,6 @@ class PersonCreate(BaseModel):
     )
 
     
-   
-    
-    
 
 class PersonOutput(BaseModel):
     id: int

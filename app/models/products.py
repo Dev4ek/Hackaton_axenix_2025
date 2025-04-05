@@ -42,6 +42,10 @@ class Products(Base):
     y: Mapped[float] = mapped_column(Float)
     z: Mapped[float] = mapped_column(Float)
     
+    time_discount_start: Mapped[Optional[int]] = mapped_column(Integer, nullable=True)
+    time_discount_end: Mapped[Optional[int]] = mapped_column(Integer, nullable=True)
+    percent_discount: Mapped[Optional[int]] = mapped_column(Integer, nullable=True)
+    
     map: Mapped['Maps'] = relationship('Maps', back_populates='products', uselist=False)
     
     @staticmethod
