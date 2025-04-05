@@ -42,13 +42,13 @@ class Shelves(Base):
     map_id: Mapped[int] = mapped_column(Integer, ForeignKey("maps.id"), index=True)
     category: Mapped[str] = mapped_column(String)
     color_hex: Mapped[str] = mapped_column(String)
+    capacity: Mapped[int] = mapped_column(Integer)
     x: Mapped[float] = mapped_column(Float)
-    y: Mapped[float] = mapped_column(Float)
     z: Mapped[float] = mapped_column(Float)
 
     map: Mapped["Maps"] = relationship("Maps", back_populates="shelves")
-
     products: Mapped[List["Products"]] = relationship("Products", back_populates="shelf")
+    
     @staticmethod
     async def create(session, shelf_data: shelves_schemas.ShelfCreate):
         shelf = Shelves(**shelf_data.dict())
@@ -57,8 +57,14 @@ class Shelves(Base):
         return shelf
 
     @staticmethod
-    async def get_by_id(session, shelf_id: int):
-        return await session.get(Shelves, shelf_id)
+    async def get_by_id(session: AsyncSession, shelf_id: int) -> "Shelves":
+        stmt = (
+            select(Shelves)
+            .where(Shelves.id == shelf_id)
+            .options(selectinload(Shelves.products))
+        )
+        result = await session.execute(stmt)
+        return result.scalar_one_or_none()
 
     @staticmethod
     async def get_by_map_id(session, map_id: int):

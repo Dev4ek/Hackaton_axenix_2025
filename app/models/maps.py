@@ -40,6 +40,7 @@ class Maps(Base):
     
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default='now()')    
     
+    kassses = relationship("Kasses", back_populates="map")
     persons = relationship("Persons", back_populates="map")
     movements = relationship("PersonMovements", back_populates="map")
     sales = relationship("Sales", back_populates="map")
@@ -59,7 +60,8 @@ class Maps(Base):
             select(Maps)
             .where(Maps.id == map_id)
             .options(
-                selectinload(Maps.shelves).selectinload(Shelves.products)
+                selectinload(Maps.shelves).selectinload(Shelves.products),
+                selectinload(Maps.kassses)
             )
         )
         

@@ -7,7 +7,6 @@ from app.models import Maps, Products, Persons, PersonMovements, Sales
 from app.dependencies import SessionDep
 from app.schemas import simulations as simulations_schemas
 from app.schemas import persons as persons_schemas
-from app.utils import simulations as simulations_utils
 
 router_simulations = APIRouter(prefix="/simulations", tags=["Симуляции"])
 

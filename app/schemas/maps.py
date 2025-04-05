@@ -4,6 +4,7 @@ from pydantic import BaseModel, Field, EmailStr
 
 
 from app.schemas import shelves as shelves_schemas
+from app.schemas import kasses as kasses_schemas
 
 
 class MapBase(BaseModel):
@@ -37,6 +38,10 @@ class MapShelves(MapBase):
     shelves: List[shelves_schemas.ShelfProducts] = Field(
         [],
         title="Стелажи",
+    )
+    kassses: List[kasses_schemas.KassesBase] = Field(
+        [],
+        title="Кассы",
     )
 
 

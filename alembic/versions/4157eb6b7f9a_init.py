@@ -1,8 +1,8 @@
 """init
 
-Revision ID: 5cd9d2419f8e
+Revision ID: 4157eb6b7f9a
 Revises: 
-Create Date: 2025-04-05 13:09:05.364781
+Create Date: 2025-04-05 17:13:06.371813
 
 """
 from typing import Sequence, Union
@@ -12,7 +12,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision: str = '5cd9d2419f8e'
+revision: str = '4157eb6b7f9a'
 down_revision: Union[str, None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
@@ -30,6 +30,18 @@ def upgrade() -> None:
     sa.PrimaryKeyConstraint('id')
     )
     op.create_index(op.f('ix_maps_id'), 'maps', ['id'], unique=False)
+    op.create_table('kasses',
+    sa.Column('id', sa.Integer(), autoincrement=True, nullable=False),
+    sa.Column('name', sa.String(length=100), nullable=False),
+    sa.Column('map_id', sa.Integer(), nullable=False),
+    sa.Column('x', sa.Integer(), nullable=False),
+    sa.Column('z', sa.Integer(), nullable=False),
+    sa.Column('created_at', sa.DateTime(timezone=True), server_default='now()', nullable=False),
+    sa.ForeignKeyConstraint(['map_id'], ['maps.id'], ),
+    sa.PrimaryKeyConstraint('id')
+    )
+    op.create_index(op.f('ix_kasses_id'), 'kasses', ['id'], unique=False)
+    op.create_index(op.f('ix_kasses_map_id'), 'kasses', ['map_id'], unique=False)
     op.create_table('persons',
     sa.Column('id', sa.Integer(), autoincrement=True, nullable=False),
     sa.Column('map_id', sa.Integer(), nullable=False),
@@ -48,7 +60,6 @@ def upgrade() -> None:
     sa.Column('color_hex', sa.String(), nullable=False),
     sa.Column('capacity', sa.Integer(), nullable=False),
     sa.Column('x', sa.Float(), nullable=False),
-    sa.Column('y', sa.Float(), nullable=False),
     sa.Column('z', sa.Float(), nullable=False),
     sa.ForeignKeyConstraint(['map_id'], ['maps.id'], ),
     sa.PrimaryKeyConstraint('id')
@@ -108,6 +119,9 @@ def downgrade() -> None:
     op.drop_table('shelves')
     op.drop_index(op.f('ix_persons_id'), table_name='persons')
     op.drop_table('persons')
+    op.drop_index(op.f('ix_kasses_map_id'), table_name='kasses')
+    op.drop_index(op.f('ix_kasses_id'), table_name='kasses')
+    op.drop_table('kasses')
     op.drop_index(op.f('ix_maps_id'), table_name='maps')
     op.drop_table('maps')
     # ### end Alembic commands ###

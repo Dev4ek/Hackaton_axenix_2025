@@ -27,11 +27,16 @@ async def create_product(
     session: SessionDep,
     payload: products_schemas.ProductCreate,
 ):
-    _map = Shelves.get_by_id(session, payload.shelf_id)
-    if not _map:
+    shelves = await Shelves.get_by_id(session, payload.shelf_id)
+    if not shelves:
         raise HTTPException(status_code=404, detail="Стелаж не найден")
-    new_product = await Products.create(session, payload)
-    return new_product
+    
+    capacity = shelves.capacity
+    if len(shelves.products) >= capacity:
+        raise HTTPException(status_code=403, detail="Стелаж переполнен")
+    else:
+        new_product = await Products.create(session, payload)
+        return new_product
 
 @router_products.get(
     "/{product_id}",
