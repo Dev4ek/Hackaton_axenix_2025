@@ -212,5 +212,6 @@ class CustomerGenerator:
 generator = CustomerGenerator()
 customers = generator.generate_customers(20)
 
-    for c in clients:
-        print(c)
+# Выводим данные клиентов
+for customer in customers:
+    print(customer)
