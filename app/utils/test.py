@@ -1,4 +1,5 @@
 import random
+import asyncio
 from datetime import datetime, timedelta
 from typing import List, Dict
 from pydantic import BaseModel
@@ -13,7 +14,6 @@ class CustomerProfile(BaseModel):
     fears: List[str]
     shopping_list: List[str]
     budget_allocation: Dict[str, float]
-    visit_time: float
 
 
 class CustomerGenerator:
@@ -113,15 +113,15 @@ class CustomerGenerator:
                 "гречка", "рис", "пшено", "овсянка", "макароны",
                 "ячневая крупа", "перловка", "булгур", "кускус"
             ]},
-            "Бытовая химия": { "products": [
+            "Бытовая химия": {"products": [
                 "моющее средство", "чистящие средства", "стиральный порошок",
                 "освежитель воздуха", "губки", "щётки", "бумажные полотенца"
             ]},
-            "Лекарства": { "products": [
+            "Лекарства": {"products": [
                 "парацетамол", "ибупрофен", "аспирин", "витамины",
                 "противогриппозные средства", "капли от насморка", "пластыри", "бинты"
             ]},
-            "Готовая еда": { "products": [
+            "Готовая еда": {"products": [
                 "пельмени", "замороженные пиццы", "готовые супы",
                 "котлеты", "блины", "чебуреки", "шаурма", "роллы"
             ]},
@@ -132,15 +132,15 @@ class CustomerGenerator:
             "Энергетики": {"products": [
                 "энергетики", "кофе в банках", "чай в бутылках", "ледяной кофе", "газировка"
             ]},
-            "Фрукты": { "products": [
+            "Фрукты": {"products": [
                 "яблоки", "бананы", "груши", "апельсины", "киви",
                 "виноград", "мандарины", "ананас", "манго", "гранат"
             ]},
-            "Детские товары": { "products": [
+            "Детские товары": {"products": [
                 "пюре детское", "подгузники", "корм для детей",
                 "соски", "бутылочки", "детские каши", "влажные салфетки"
             ]},
-            "Экопродукты": { "products": [
+            "Экопродукты": {"products": [
                 "соевое молоко", "миндальное молоко", "гречневая лапша",
                 "растительный йогурт", "тофу", "эко-крупы", "натуральные соки"
             ]},
@@ -150,68 +150,51 @@ class CustomerGenerator:
             ]}
         }
 
-    def generate_preferences(self, segment, budget):
+    async def generate_preferences(self, segment, budget):
+        # Симуляция асинхронной операции (например, обращение к базе данных)
+        await asyncio.sleep(0)
         preferences = []
         for category, allocation in budget.items():
-            # Если выделение бюджета маленькое, уменьшаем вероятность добавления товаров
             if allocation < 0.05:
                 continue
-            # Введение случайности в распределение товаров
-            variance = random.uniform(0.8, 1.2)  
+            variance = random.uniform(0.8, 1.2)
             adjusted_allocation = allocation * variance
 
             if category in segment["preferences"]:
-                # Увеличиваем вероятность выбора продуктов из предпочтений
                 products = self.product_categories[category]["products"]
                 count_products = max(1, int(adjusted_allocation * len(products)))
                 preferences += random.sample(products, k=min(count_products, len(products)))
             else:
-                # Уменьшаем вероятность выбора товаров из непреоритетных категорий
                 products = self.product_categories[category]["products"]
-                count_products = max(1, int(adjusted_allocation * len(products) * 0.5))  # Меньше товаров
+                count_products = max(1, int(adjusted_allocation * len(products) * 0.5))
                 preferences += random.sample(products, k=min(count_products, len(products)))
-
         return preferences
 
-    def generate_customers(self, count: int) -> List[CustomerProfile]:
-        customers = []
-        for i in range(count):
-            segment = random.choice(self.segments)
-            age = random.randint(*segment["age_range"])
-            name = f"Клиент_{i + 1}"
-            motives = random.sample(segment["motives"], k=min(2, len(segment["motives"])))
-            fears = random.sample(segment["fears"], k=min(2, len(segment["fears"])))
+    async def generate_customer(self, i: int) -> Dict:
+        # Симуляция асинхронной операции
+        await asyncio.sleep(0)
+        segment = random.choice(self.segments)
+        age = random.randint(*segment["age_range"])
+        name = f"Клиент_{i + 1}"
+        motives = random.sample(segment["motives"], k=min(2, len(segment["motives"])))
+        fears = random.sample(segment["fears"], k=min(2, len(segment["fears"])))
+        preferences = await self.generate_preferences(segment, segment["budget_allocation"])
+        shopping_list_size = random.randint(5, 12)
+        shopping_list = random.sample(preferences, k=min(len(preferences), shopping_list_size))
 
-            # Генерация предпочтений с учетом перераспределения бюджета
-            preferences = self.generate_preferences(segment, segment["budget_allocation"])
+        customer = CustomerProfile(
+            name=name,
+            age=age,
+            segment=segment["name"],
+            motives=motives,
+            preferences=preferences,
+            fears=fears,
+            shopping_list=shopping_list,
+            budget_allocation=segment["budget_allocation"],
+        )
+        return customer.model_dump()
 
-            # Добавляем случайность в список покупок, чтобы товары были более разнообразными
-            shopping_list_size = random.randint(5, 12)  # Ограничиваем размер списка
-            shopping_list = random.sample(preferences, k=min(len(preferences), shopping_list_size))
-
-            # Время прихода: случайное время от 9:00 до 21:00 в секундах
-            visit_seconds = random.randint(9 * 3600, 21 * 3600)
-
-            customer = CustomerProfile(
-                name=name,
-                age=age,
-                segment=segment["name"],
-                motives=motives,
-                preferences=preferences,
-                fears=fears,
-                shopping_list=shopping_list,
-                budget_allocation=segment["budget_allocation"],
-                visit_time=visit_seconds
-            )
-            customers.append(customer)
-
+    async def generate_customers(self, count: int) -> List[Dict]:
+        tasks = [asyncio.create_task(self.generate_customer(i)) for i in range(count)]
+        customers = await asyncio.gather(*tasks)
         return customers
-
-
-# Генерация 20 клиентов
-generator = CustomerGenerator()
-customers = generator.generate_customers(50)
-
-# Выводим данные клиентов
-for customer in customers:
-    print(customer)

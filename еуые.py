@@ -50,46 +50,73 @@ product_categories = {
         "елочные игрушки", "пасхальные яйца", "снегокат"
     ]}
 }
+# base_url = "http://localhost:8082"
+base_url = "https://api.melzik.ru"
+map_id = 3
 
-base_url = "http://localhost:8082"
+# Параметры сетки
+start_x, start_z = 2, 2
+step_x, step_z = 5, 5
+grid_width = 4  # сколько стеллажей по горизонтали
 
-for category_name, category_data in product_categories.items():
-    # Формируем JSON для создания стеллажа
+positions = []
+for i in range(len(product_categories)):
+    row = i // grid_width
+    col = i % grid_width
+    x = start_x + col * step_x
+    z = start_z + row * step_z
+    positions.append((x, z))
+
+# Расстановка стеллажей
+for (i, (category_name, category_data)) in enumerate(product_categories.items()):
+    x, z = positions[i]
+
     shelf_payload = {
         "name": category_name,
-        "map_id": 1,
+        "map_id": map_id,
+        "capacity": 10,
         "category": category_name,
-        "color_hex": "#AAAAAA",  # пример цвета, можно изменить
-        "x": random.randint(0, 20),
+        "color_hex": "#AAAAAA",
+        "x": x,
         "y": 1,
-        "z": random.randint(0, 20)
+        "z": z
     }
-    
-    # Создаём стеллаж
+
     shelf_response = requests.post(f"{base_url}/shelves", json=shelf_payload)
-    
-    if shelf_response.status_code == 200 or shelf_response.status_code == 201:
-        # Допустим, что ID стеллажа возвращается в JSON поле "id"
+
+    if shelf_response.status_code in (200, 201):
         shelf_id = shelf_response.json().get("id")
         print(f"Стеллаж '{category_name}' создан. ID = {shelf_id}.")
-        
-        # Проходимся по каждому продукту внутри категории
+
         for product_name in category_data["products"]:
             product_payload = {
                 "name": product_name,
                 "shelf_id": shelf_id,
-                "color_hex": "#FF0000",  # можно изменить цвет
+                "color_hex": "#FF0000",
                 "percent_discount": None,
                 "time_discount_start": None,
                 "time_discount_end": None
             }
-            
+
             product_response = requests.post(f"{base_url}/products", json=product_payload)
-            if product_response.status_code == 200 or product_response.status_code == 201:
-                print(f"  Продукт '{product_name}' успешно добавлен в стеллаж (ID {shelf_id}).")
+            if product_response.status_code in (200, 201):
+                print(f"  Продукт '{product_name}' успешно добавлен.")
             else:
-                print(f"  Ошибка при добавлении продукта '{product_name}': {product_response.text}")
+                print(f"  Ошибка при добавлении '{product_name}': {product_response.text}")
     else:
         print(f"Ошибка при создании стеллажа '{category_name}': {shelf_response.text}")
 
+# Добавление кассы
+cashier_payload = {
+    "name": "Касса 1",
+    "map_id": map_id,
+    "x": 18,
+    "y": 1,
+    "z": 18
+}
 
+cashier_response = requests.post(f"{base_url}/shelves", json=cashier_payload)
+if cashier_response.status_code in (200, 201):
+    print("Касса успешно добавлена.")
+else:
+    print(f"Ошибка при добавлении кассы: {cashier_response.text}")

@@ -1,0 +1,1555 @@
+{
+  "results": [
+    {
+      "client": "Клиент_6",
+      "path": [
+        {
+          "x": 0,
+          "z": 0,
+          "time": 33855.0,
+          "event": "entered_store"
+        },
+        {
+          "x": 1,
+          "z": 0,
+          "time": 33859.0
+        },
+        {
+          "x": 2,
+          "z": 0,
+          "time": 33863.0
+        },
+        {
+          "x": 3,
+          "z": 0,
+          "time": 33867.0
+        },
+        {
+          "x": 4,
+          "z": 0,
+          "time": 33871.0
+        },
+        {
+          "x": 5,
+          "z": 0,
+          "time": 33875.0
+        },
+        {
+          "x": 6,
+          "z": 0,
+          "time": 33879.0
+        },
+        {
+          "x": 7,
+          "z": 0,
+          "time": 33883.0
+        },
+        {
+          "x": 8,
+          "z": 0,
+          "time": 33887.0
+        },
+        {
+          "x": 9,
+          "z": 0,
+          "time": 33891.0
+        },
+        {
+          "x": 10,
+          "z": 0,
+          "time": 33895.0
+        },
+        {
+          "x": 11,
+          "z": 0,
+          "time": 33899.0
+        },
+        {
+          "x": 12,
+          "z": 0,
+          "time": 33903.0
+        },
+        {
+          "x": 13,
+          "z": 0,
+          "time": 33907.0
+        },
+        {
+          "x": 14,
+          "z": 0,
+          "time": 33911.0
+        },
+        {
+          "x": 15,
+          "z": 0,
+          "time": 33915.0
+        },
+        {
+          "x": 16,
+          "z": 0,
+          "time": 33919.0
+        },
+        {
+          "x": 16,
+          "z": 1,
+          "time": 33923.0
+        },
+        {
+          "x": 16,
+          "z": 2,
+          "time": 33927.0
+        },
+        {
+          "x": 16,
+          "z": 3,
+          "time": 33931.0
+        },
+        {
+          "x": 16,
+          "z": 4,
+          "time": 33935.0
+        },
+        {
+          "x": 16,
+          "z": 5,
+          "time": 33939.0
+        },
+        {
+          "x": 16,
+          "z": 6,
+          "time": 33943.0
+        },
+        {
+          "x": 16,
+          "z": 7,
+          "time": 33947.0
+        },
+        {
+          "x": 16,
+          "z": 8,
+          "time": 33951.0
+        },
+        {
+          "x": 16,
+          "z": 9,
+          "time": 33955.0
+        },
+        {
+          "x": 16,
+          "z": 10,
+          "time": 33959.0
+        },
+        {
+          "x": 16,
+          "z": 11,
+          "time": 33963.0
+        },
+        {
+          "x": 16,
+          "z": 12,
+          "time": 33967.0
+        },
+        {
+          "x": 16,
+          "z": 13,
+          "time": 33971.0
+        },
+        {
+          "x": 16,
+          "z": 14,
+          "time": 33975.0
+        },
+        {
+          "x": 16,
+          "z": 15,
+          "time": 33979.0
+        },
+        {
+          "x": 16,
+          "z": 16,
+          "time": 33983.0
+        },
+        {
+          "x": 16,
+          "z": 16,
+          "time": 33993.0,
+          "event": "finished queue at Kassa 1"
+        }
+      ],
+      "purchases": [],
+      "end_time": 33993.0,
+      "status": "completed"
+    },
+    {
+      "client": "Клиент_27",
+      "path": [
+        {
+          "x": 0,
+          "z": 0,
+          "time": 34971.0,
+          "event": "entered_store"
+        },
+        {
+          "x": 1,
+          "z": 0,
+          "time": 34975.0
+        },
+        {
+          "x": 2,
+          "z": 0,
+          "time": 34979.0
+        },
+        {
+          "x": 3,
+          "z": 0,
+          "time": 34983.0
+        },
+        {
+          "x": 4,
+          "z": 0,
+          "time": 34987.0
+        },
+        {
+          "x": 5,
+          "z": 0,
+          "time": 34991.0
+        },
+        {
+          "x": 6,
+          "z": 0,
+          "time": 34995.0
+        },
+        {
+          "x": 7,
+          "z": 0,
+          "time": 34999.0
+        },
+        {
+          "x": 8,
+          "z": 0,
+          "time": 35003.0
+        },
+        {
+          "x": 9,
+          "z": 0,
+          "time": 35007.0
+        },
+        {
+          "x": 10,
+          "z": 0,
+          "time": 35011.0
+        },
+        {
+          "x": 11,
+          "z": 0,
+          "time": 35015.0
+        },
+        {
+          "x": 12,
+          "z": 0,
+          "time": 35019.0
+        },
+        {
+          "x": 13,
+          "z": 0,
+          "time": 35023.0
+        },
+        {
+          "x": 14,
+          "z": 0,
+          "time": 35027.0
+        },
+        {
+          "x": 15,
+          "z": 0,
+          "time": 35031.0
+        },
+        {
+          "x": 16,
+          "z": 0,
+          "time": 35035.0
+        },
+        {
+          "x": 16,
+          "z": 1,
+          "time": 35039.0
+        },
+        {
+          "x": 16,
+          "z": 2,
+          "time": 35043.0
+        },
+        {
+          "x": 16,
+          "z": 3,
+          "time": 35047.0
+        },
+        {
+          "x": 16,
+          "z": 4,
+          "time": 35051.0
+        },
+        {
+          "x": 16,
+          "z": 5,
+          "time": 35055.0
+        },
+        {
+          "x": 16,
+          "z": 6,
+          "time": 35059.0
+        },
+        {
+          "x": 16,
+          "z": 7,
+          "time": 35063.0
+        },
+        {
+          "x": 16,
+          "z": 8,
+          "time": 35067.0
+        },
+        {
+          "x": 16,
+          "z": 9,
+          "time": 35071.0
+        },
+        {
+          "x": 16,
+          "z": 10,
+          "time": 35075.0
+        },
+        {
+          "x": 16,
+          "z": 11,
+          "time": 35079.0
+        },
+        {
+          "x": 16,
+          "z": 12,
+          "time": 35083.0
+        },
+        {
+          "x": 16,
+          "z": 13,
+          "time": 35087.0
+        },
+        {
+          "x": 16,
+          "z": 14,
+          "time": 35091.0
+        },
+        {
+          "x": 16,
+          "z": 15,
+          "time": 35095.0
+        },
+        {
+          "x": 16,
+          "z": 16,
+          "time": 35099.0
+        },
+        {
+          "x": 16,
+          "z": 16,
+          "time": 35119.0,
+          "event": "finished queue at Kassa 1"
+        }
+      ],
+      "purchases": [],
+      "end_time": 35119.0,
+      "status": "completed"
+    },
+    {
+      "client": "Клиент_2",
+      "path": [
+        {
+          "x": 0,
+          "z": 0,
+          "time": 35783.0,
+          "event": "entered_store"
+        },
+        {
+          "x": 1,
+          "z": 0,
+          "time": 35787.0
+        },
+        {
+          "x": 2,
+          "z": 0,
+          "time": 35791.0
+        },
+        {
+          "x": 3,
+          "z": 0,
+          "time": 35795.0
+        },
+        {
+          "x": 4,
+          "z": 0,
+          "time": 35799.0
+        },
+        {
+          "x": 5,
+          "z": 0,
+          "time": 35803.0
+        },
+        {
+          "x": 6,
+          "z": 0,
+          "time": 35807.0
+        },
+        {
+          "x": 7,
+          "z": 0,
+          "time": 35811.0
+        },
+        {
+          "x": 8,
+          "z": 0,
+          "time": 35815.0
+        },
+        {
+          "x": 9,
+          "z": 0,
+          "time": 35819.0
+        },
+        {
+          "x": 10,
+          "z": 0,
+          "time": 35823.0
+        },
+        {
+          "x": 11,
+          "z": 0,
+          "time": 35827.0
+        },
+        {
+          "x": 12,
+          "z": 0,
+          "time": 35831.0
+        },
+        {
+          "x": 13,
+          "z": 0,
+          "time": 35835.0
+        },
+        {
+          "x": 14,
+          "z": 0,
+          "time": 35839.0
+        },
+        {
+          "x": 15,
+          "z": 0,
+          "time": 35843.0
+        },
+        {
+          "x": 16,
+          "z": 0,
+          "time": 35847.0
+        },
+        {
+          "x": 16,
+          "z": 1,
+          "time": 35851.0
+        },
+        {
+          "x": 16,
+          "z": 2,
+          "time": 35855.0
+        },
+        {
+          "x": 16,
+          "z": 3,
+          "time": 35859.0
+        },
+        {
+          "x": 16,
+          "z": 4,
+          "time": 35863.0
+        },
+        {
+          "x": 16,
+          "z": 5,
+          "time": 35867.0
+        },
+        {
+          "x": 16,
+          "z": 6,
+          "time": 35871.0
+        },
+        {
+          "x": 16,
+          "z": 7,
+          "time": 35875.0
+        },
+        {
+          "x": 16,
+          "z": 8,
+          "time": 35879.0
+        },
+        {
+          "x": 16,
+          "z": 9,
+          "time": 35883.0
+        },
+        {
+          "x": 16,
+          "z": 10,
+          "time": 35887.0
+        },
+        {
+          "x": 16,
+          "z": 11,
+          "time": 35891.0
+        },
+        {
+          "x": 16,
+          "z": 12,
+          "time": 35895.0
+        },
+        {
+          "x": 16,
+          "z": 13,
+          "time": 35899.0
+        },
+        {
+          "x": 16,
+          "z": 14,
+          "time": 35903.0
+        },
+        {
+          "x": 16,
+          "z": 15,
+          "time": 35907.0
+        },
+        {
+          "x": 16,
+          "z": 16,
+          "time": 35911.0
+        },
+        {
+          "x": 16,
+          "z": 16,
+          "time": 35941.0,
+          "event": "finished queue at Kassa 1"
+        }
+      ],
+      "purchases": [],
+      "end_time": 35941.0,
+      "status": "completed"
+    },
+    {
+      "client": "Клиент_16",
+      "path": [
+        {
+          "x": 0,
+          "z": 0,
+          "time": 37413.0,
+          "event": "entered_store"
+        },
+        {
+          "x": 1,
+          "z": 0,
+          "time": 37417.0
+        },
+        {
+          "x": 2,
+          "z": 0,
+          "time": 37421.0
+        },
+        {
+          "x": 3,
+          "z": 0,
+          "time": 37425.0
+        },
+        {
+          "x": 4,
+          "z": 0,
+          "time": 37429.0
+        },
+        {
+          "x": 5,
+          "z": 0,
+          "time": 37433.0
+        },
+        {
+          "x": 6,
+          "z": 0,
+          "time": 37437.0
+        },
+        {
+          "x": 7,
+          "z": 0,
+          "time": 37441.0
+        },
+        {
+          "x": 8,
+          "z": 0,
+          "time": 37445.0
+        },
+        {
+          "x": 9,
+          "z": 0,
+          "time": 37449.0
+        },
+        {
+          "x": 10,
+          "z": 0,
+          "time": 37453.0
+        },
+        {
+          "x": 11,
+          "z": 0,
+          "time": 37457.0
+        },
+        {
+          "x": 12,
+          "z": 0,
+          "time": 37461.0
+        },
+        {
+          "x": 13,
+          "z": 0,
+          "time": 37465.0
+        },
+        {
+          "x": 14,
+          "z": 0,
+          "time": 37469.0
+        },
+        {
+          "x": 15,
+          "z": 0,
+          "time": 37473.0
+        },
+        {
+          "x": 16,
+          "z": 0,
+          "time": 37477.0
+        },
+        {
+          "x": 16,
+          "z": 1,
+          "time": 37481.0
+        },
+        {
+          "x": 16,
+          "z": 2,
+          "time": 37485.0
+        },
+        {
+          "x": 16,
+          "z": 3,
+          "time": 37489.0
+        },
+        {
+          "x": 16,
+          "z": 4,
+          "time": 37493.0
+        },
+        {
+          "x": 16,
+          "z": 5,
+          "time": 37497.0
+        },
+        {
+          "x": 16,
+          "z": 6,
+          "time": 37501.0
+        },
+        {
+          "x": 16,
+          "z": 7,
+          "time": 37505.0
+        },
+        {
+          "x": 16,
+          "z": 8,
+          "time": 37509.0
+        },
+        {
+          "x": 16,
+          "z": 9,
+          "time": 37513.0
+        },
+        {
+          "x": 16,
+          "z": 10,
+          "time": 37517.0
+        },
+        {
+          "x": 16,
+          "z": 11,
+          "time": 37521.0
+        },
+        {
+          "x": 16,
+          "z": 12,
+          "time": 37525.0
+        },
+        {
+          "x": 16,
+          "z": 13,
+          "time": 37529.0
+        },
+        {
+          "x": 16,
+          "z": 14,
+          "time": 37533.0
+        },
+        {
+          "x": 16,
+          "z": 15,
+          "time": 37537.0
+        },
+        {
+          "x": 16,
+          "z": 16,
+          "time": 37541.0
+        },
+        {
+          "x": 16,
+          "z": 16,
+          "time": 37581.0,
+          "event": "finished queue at Kassa 1"
+        }
+      ],
+      "purchases": [],
+      "end_time": 37581.0,
+      "status": "completed"
+    },
+    {
+      "client": "Клиент_39",
+      "path": [
+        {
+          "x": 0,
+          "z": 0,
+          "time": 37569.0,
+          "event": "entered_store"
+        },
+        {
+          "x": 1,
+          "z": 0,
+          "time": 37573.0
+        },
+        {
+          "x": 2,
+          "z": 0,
+          "time": 37577.0
+        },
+        {
+          "x": 3,
+          "z": 0,
+          "time": 37581.0
+        },
+        {
+          "x": 4,
+          "z": 0,
+          "time": 37585.0
+        },
+        {
+          "x": 5,
+          "z": 0,
+          "time": 37589.0
+        },
+        {
+          "x": 6,
+          "z": 0,
+          "time": 37593.0
+        },
+        {
+          "x": 7,
+          "z": 0,
+          "time": 37597.0
+        },
+        {
+          "x": 8,
+          "z": 0,
+          "time": 37601.0
+        },
+        {
+          "x": 9,
+          "z": 0,
+          "time": 37605.0
+        },
+        {
+          "x": 10,
+          "z": 0,
+          "time": 37609.0
+        },
+        {
+          "x": 11,
+          "z": 0,
+          "time": 37613.0
+        },
+        {
+          "x": 12,
+          "z": 0,
+          "time": 37617.0
+        },
+        {
+          "x": 13,
+          "z": 0,
+          "time": 37621.0
+        },
+        {
+          "x": 14,
+          "z": 0,
+          "time": 37625.0
+        },
+        {
+          "x": 15,
+          "z": 0,
+          "time": 37629.0
+        },
+        {
+          "x": 16,
+          "z": 0,
+          "time": 37633.0
+        },
+        {
+          "x": 16,
+          "z": 1,
+          "time": 37637.0
+        },
+        {
+          "x": 16,
+          "z": 2,
+          "time": 37641.0
+        },
+        {
+          "x": 16,
+          "z": 3,
+          "time": 37645.0
+        },
+        {
+          "x": 16,
+          "z": 4,
+          "time": 37649.0
+        },
+        {
+          "x": 16,
+          "z": 5,
+          "time": 37653.0
+        },
+        {
+          "x": 16,
+          "z": 6,
+          "time": 37657.0
+        },
+        {
+          "x": 16,
+          "z": 7,
+          "time": 37661.0
+        },
+        {
+          "x": 16,
+          "z": 8,
+          "time": 37665.0
+        },
+        {
+          "x": 16,
+          "z": 9,
+          "time": 37669.0
+        },
+        {
+          "x": 16,
+          "z": 10,
+          "time": 37673.0
+        },
+        {
+          "x": 16,
+          "z": 11,
+          "time": 37677.0
+        },
+        {
+          "x": 16,
+          "z": 12,
+          "time": 37681.0
+        },
+        {
+          "x": 16,
+          "z": 13,
+          "time": 37685.0
+        },
+        {
+          "x": 16,
+          "z": 14,
+          "time": 37689.0
+        },
+        {
+          "x": 16,
+          "z": 15,
+          "time": 37693.0
+        },
+        {
+          "x": 16,
+          "z": 16,
+          "time": 37697.0
+        },
+        {
+          "x": 16,
+          "z": 16,
+          "time": 37747.0,
+          "event": "finished queue at Kassa 1"
+        }
+      ],
+      "purchases": [],
+      "end_time": 37747.0,
+      "status": "completed"
+    },
+    {
+      "client": "Клиент_44",
+      "path": [
+        {
+          "x": 0,
+          "z": 0,
+          "time": 38203.0,
+          "event": "entered_store"
+        }
+      ],
+      "purchases": [],
+      "end_time": 38203.0,
+      "status": "left_due_to_queue"
+    },
+    {
+      "client": "Клиент_1",
+      "path": [
+        {
+          "x": 1,
+          "z": 0,
+          "time": 39005.0,
+          "event": "entered_store"
+        }
+      ],
+      "purchases": [],
+      "end_time": 39005.0,
+      "status": "left_due_to_queue"
+    },
+    {
+      "client": "Клиент_37",
+      "path": [
+        {
+          "x": 2,
+          "z": 0,
+          "time": 39665.0,
+          "event": "entered_store"
+        }
+      ],
+      "purchases": [],
+      "end_time": 39665.0,
+      "status": "left_due_to_queue"
+    },
+    {
+      "client": "Клиент_5",
+      "path": [
+        {
+          "x": 3,
+          "z": 0,
+          "time": 39743.0,
+          "event": "entered_store"
+        }
+      ],
+      "purchases": [],
+      "end_time": 39743.0,
+      "status": "left_due_to_queue"
+    },
+    {
+      "client": "Клиент_18",
+      "path": [
+        {
+          "x": 4,
+          "z": 0,
+          "time": 39904.0,
+          "event": "entered_store"
+        }
+      ],
+      "purchases": [],
+      "end_time": 39904.0,
+      "status": "left_due_to_queue"
+    },
+    {
+      "client": "Клиент_35",
+      "path": [
+        {
+          "x": 5,
+          "z": 0,
+          "time": 40961.0,
+          "event": "entered_store"
+        }
+      ],
+      "purchases": [],
+      "end_time": 40961.0,
+      "status": "left_due_to_queue"
+    },
+    {
+      "client": "Клиент_42",
+      "path": [
+        {
+          "x": 6,
+          "z": 0,
+          "time": 41214.0,
+          "event": "entered_store"
+        }
+      ],
+      "purchases": [],
+      "end_time": 41214.0,
+      "status": "left_due_to_queue"
+    },
+    {
+      "client": "Клиент_14",
+      "path": [
+        {
+          "x": 7,
+          "z": 0,
+          "time": 41901.0,
+          "event": "entered_store"
+        }
+      ],
+      "purchases": [],
+      "end_time": 41901.0,
+      "status": "left_due_to_queue"
+    },
+    {
+      "client": "Клиент_23",
+      "path": [
+        {
+          "x": 8,
+          "z": 0,
+          "time": 42375.0,
+          "event": "entered_store"
+        }
+      ],
+      "purchases": [],
+      "end_time": 42375.0,
+      "status": "left_due_to_queue"
+    },
+    {
+      "client": "Клиент_48",
+      "path": [
+        {
+          "x": 9,
+          "z": 0,
+          "time": 42759.0,
+          "event": "entered_store"
+        }
+      ],
+      "purchases": [],
+      "end_time": 42759.0,
+      "status": "left_due_to_queue"
+    },
+    {
+      "client": "Клиент_49",
+      "path": [
+        {
+          "x": 10,
+          "z": 0,
+          "time": 44093.0,
+          "event": "entered_store"
+        }
+      ],
+      "purchases": [],
+      "end_time": 44093.0,
+      "status": "left_due_to_queue"
+    },
+    {
+      "client": "Клиент_36",
+      "path": [
+        {
+          "x": 11,
+          "z": 0,
+          "time": 45255.0,
+          "event": "entered_store"
+        }
+      ],
+      "purchases": [],
+      "end_time": 45255.0,
+      "status": "left_due_to_queue"
+    },
+    {
+      "client": "Клиент_34",
+      "path": [
+        {
+          "x": 12,
+          "z": 0,
+          "time": 45294.0,
+          "event": "entered_store"
+        }
+      ],
+      "purchases": [],
+      "end_time": 45294.0,
+      "status": "left_due_to_queue"
+    },
+    {
+      "client": "Клиент_7",
+      "path": [
+        {
+          "x": 13,
+          "z": 0,
+          "time": 47425.0,
+          "event": "entered_store"
+        }
+      ],
+      "purchases": [],
+      "end_time": 47425.0,
+      "status": "left_due_to_queue"
+    },
+    {
+      "client": "Клиент_19",
+      "path": [
+        {
+          "x": 14,
+          "z": 0,
+          "time": 48359.0,
+          "event": "entered_store"
+        }
+      ],
+      "purchases": [],
+      "end_time": 48359.0,
+      "status": "left_due_to_queue"
+    },
+    {
+      "client": "Клиент_21",
+      "path": [
+        {
+          "x": 15,
+          "z": 0,
+          "time": 49399.0,
+          "event": "entered_store"
+        }
+      ],
+      "purchases": [],
+      "end_time": 49399.0,
+      "status": "left_due_to_queue"
+    },
+    {
+      "client": "Клиент_8",
+      "path": [
+        {
+          "x": 16,
+          "z": 0,
+          "time": 49540.0,
+          "event": "entered_store"
+        }
+      ],
+      "purchases": [],
+      "end_time": 49540.0,
+      "status": "left_due_to_queue"
+    },
+    {
+      "client": "Клиент_29",
+      "path": [
+        {
+          "x": 17,
+          "z": 0,
+          "time": 50730.0,
+          "event": "entered_store"
+        }
+      ],
+      "purchases": [],
+      "end_time": 50730.0,
+      "status": "left_due_to_queue"
+    },
+    {
+      "client": "Клиент_41",
+      "path": [
+        {
+          "x": 18,
+          "z": 0,
+          "time": 51458.0,
+          "event": "entered_store"
+        }
+      ],
+      "purchases": [],
+      "end_time": 51458.0,
+      "status": "left_due_to_queue"
+    },
+    {
+      "client": "Клиент_46",
+      "path": [
+        {
+          "x": 19,
+          "z": 0,
+          "time": 51993.0,
+          "event": "entered_store"
+        }
+      ],
+      "purchases": [],
+      "end_time": 51993.0,
+      "status": "left_due_to_queue"
+    },
+    {
+      "client": "Клиент_38",
+      "path": [],
+      "purchases": [],
+      "end_time": 52868.0,
+      "status": "no_start_position"
+    },
+    {
+      "client": "Клиент_4",
+      "path": [],
+      "purchases": [],
+      "end_time": 53506.0,
+      "status": "no_start_position"
+    },
+    {
+      "client": "Клиент_26",
+      "path": [],
+      "purchases": [],
+      "end_time": 54446.0,
+      "status": "no_start_position"
+    },
+    {
+      "client": "Клиент_47",
+      "path": [],
+      "purchases": [],
+      "end_time": 54717.0,
+      "status": "no_start_position"
+    },
+    {
+      "client": "Клиент_40",
+      "path": [],
+      "purchases": [],
+      "end_time": 56196.0,
+      "status": "no_start_position"
+    },
+    {
+      "client": "Клиент_11",
+      "path": [],
+      "purchases": [],
+      "end_time": 59964.0,
+      "status": "no_start_position"
+    },
+    {
+      "client": "Клиент_15",
+      "path": [],
+      "purchases": [],
+      "end_time": 60561.0,
+      "status": "no_start_position"
+    },
+    {
+      "client": "Клиент_10",
+      "path": [],
+      "purchases": [],
+      "end_time": 60654.0,
+      "status": "no_start_position"
+    },
+    {
+      "client": "Клиент_13",
+      "path": [],
+      "purchases": [],
+      "end_time": 60779.0,
+      "status": "no_start_position"
+    },
+    {
+      "client": "Клиент_3",
+      "path": [],
+      "purchases": [],
+      "end_time": 60830.0,
+      "status": "no_start_position"
+    },
+    {
+      "client": "Клиент_9",
+      "path": [],
+      "purchases": [],
+      "end_time": 61829.0,
+      "status": "no_start_position"
+    },
+    {
+      "client": "Клиент_20",
+      "path": [],
+      "purchases": [],
+      "end_time": 61950.0,
+      "status": "no_start_position"
+    },
+    {
+      "client": "Клиент_32",
+      "path": [],
+      "purchases": [],
+      "end_time": 62287.0,
+      "status": "no_start_position"
+    },
+    {
+      "client": "Клиент_25",
+      "path": [],
+      "purchases": [],
+      "end_time": 62580.0,
+      "status": "no_start_position"
+    },
+    {
+      "client": "Клиент_50",
+      "path": [],
+      "purchases": [],
+      "end_time": 62794.0,
+      "status": "no_start_position"
+    },
+    {
+      "client": "Клиент_22",
+      "path": [],
+      "purchases": [],
+      "end_time": 63196.0,
+      "status": "no_start_position"
+    },
+    {
+      "client": "Клиент_24",
+      "path": [],
+      "purchases": [],
+      "end_time": 64954.0,
+      "status": "no_start_position"
+    },
+    {
+      "client": "Клиент_43",
+      "path": [],
+      "purchases": [],
+      "end_time": 65369.0,
+      "status": "no_start_position"
+    },
+    {
+      "client": "Клиент_31",
+      "path": [],
+      "purchases": [],
+      "end_time": 65896.0,
+      "status": "no_start_position"
+    },
+    {
+      "client": "Клиент_17",
+      "path": [],
+      "purchases": [],
+      "end_time": 67136.0,
+      "status": "no_start_position"
+    },
+    {
+      "client": "Клиент_12",
+      "path": [],
+      "purchases": [],
+      "end_time": 67508.0,
+      "status": "no_start_position"
+    },
+    {
+      "client": "Клиент_30",
+      "path": [],
+      "purchases": [],
+      "end_time": 70986.0,
+      "status": "no_start_position"
+    },
+    {
+      "client": "Клиент_33",
+      "path": [],
+      "purchases": [],
+      "end_time": 71040.0,
+      "status": "no_start_position"
+    },
+    {
+      "client": "Клиент_45",
+      "path": [],
+      "purchases": [],
+      "end_time": 72264.0,
+      "status": "no_start_position"
+    },
+    {
+      "client": "Клиент_28",
+      "path": [],
+      "purchases": [],
+      "end_time": 72430.0,
+      "status": "no_start_position"
+    }
+  ],
+  "statistics": {
+    "total_clients": 50,
+    "completed": 5,
+    "left_due_to_queue": 20,
+    "store_closed": 0,
+    "no_kassa": 0,
+    "no_path_to_kassa": 0,
+    "no_path_to_shelf": 0,
+    "no_start_position": 25,
+    "total_purchases": 0,
+    "motive_trigger_count": 0,
+    "fear_trigger_count": 30,
+    "discount_trigger_count": 0
+  },
+  "popular_zones": [
+    {
+      "x": 0,
+      "z": 0,
+      "visits": 11
+    },
+    {
+      "x": 1,
+      "z": 0,
+      "visits": 6
+    },
+    {
+      "x": 2,
+      "z": 0,
+      "visits": 6
+    },
+    {
+      "x": 3,
+      "z": 0,
+      "visits": 6
+    },
+    {
+      "x": 4,
+      "z": 0,
+      "visits": 6
+    },
+    {
+      "x": 5,
+      "z": 0,
+      "visits": 6
+    },
+    {
+      "x": 6,
+      "z": 0,
+      "visits": 6
+    },
+    {
+      "x": 7,
+      "z": 0,
+      "visits": 6
+    },
+    {
+      "x": 8,
+      "z": 0,
+      "visits": 6
+    },
+    {
+      "x": 9,
+      "z": 0,
+      "visits": 6
+    },
+    {
+      "x": 10,
+      "z": 0,
+      "visits": 6
+    },
+    {
+      "x": 11,
+      "z": 0,
+      "visits": 6
+    },
+    {
+      "x": 12,
+      "z": 0,
+      "visits": 6
+    },
+    {
+      "x": 13,
+      "z": 0,
+      "visits": 6
+    },
+    {
+      "x": 14,
+      "z": 0,
+      "visits": 6
+    },
+    {
+      "x": 15,
+      "z": 0,
+      "visits": 6
+    },
+    {
+      "x": 16,
+      "z": 0,
+      "visits": 6
+    },
+    {
+      "x": 16,
+      "z": 1,
+      "visits": 5
+    },
+    {
+      "x": 16,
+      "z": 2,
+      "visits": 5
+    },
+    {
+      "x": 16,
+      "z": 3,
+      "visits": 5
+    },
+    {
+      "x": 16,
+      "z": 4,
+      "visits": 5
+    },
+    {
+      "x": 16,
+      "z": 5,
+      "visits": 5
+    },
+    {
+      "x": 16,
+      "z": 6,
+      "visits": 5
+    },
+    {
+      "x": 16,
+      "z": 7,
+      "visits": 5
+    },
+    {
+      "x": 16,
+      "z": 8,
+      "visits": 5
+    },
+    {
+      "x": 16,
+      "z": 9,
+      "visits": 5
+    },
+    {
+      "x": 16,
+      "z": 10,
+      "visits": 5
+    },
+    {
+      "x": 16,
+      "z": 11,
+      "visits": 5
+    },
+    {
+      "x": 16,
+      "z": 12,
+      "visits": 5
+    },
+    {
+      "x": 16,
+      "z": 13,
+      "visits": 5
+    },
+    {
+      "x": 16,
+      "z": 14,
+      "visits": 5
+    },
+    {
+      "x": 16,
+      "z": 15,
+      "visits": 5
+    },
+    {
+      "x": 16,
+      "z": 16,
+      "visits": 5
+    },
+    {
+      "x": 17,
+      "z": 0,
+      "visits": 1
+    },
+    {
+      "x": 18,
+      "z": 0,
+      "visits": 1
+    },
+    {
+      "x": 19,
+      "z": 0,
+      "visits": 1
+    }
+  ]
+}
