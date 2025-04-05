@@ -64,3 +64,11 @@ class Kasses(Base):
     async def get_by_id(session: AsyncSession, kasse_id: int) -> Optional['Kasses']:
         return await session.get(Kasses, kasse_id)
     
+    @staticmethod
+    async def get_by_map_id(session: AsyncSession, map_id: int) -> List['Kasses']:
+        stmt = (
+            select(Kasses)
+            .where(Kasses.map_id == map_id)
+        )
+        result = await session.execute(stmt)
+        return result.scalars().all()
