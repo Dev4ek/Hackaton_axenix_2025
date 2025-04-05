@@ -14,6 +14,7 @@ class ProductCreate(BaseModel):
         title="Идентификатор карты",
         example=4
     )
+    shelf_id: Optional[int] = None  # если товар лежит на стеллаже
     
     color_hex: str = Field(
         ...,

@@ -57,5 +57,3 @@ class MapFullOutput(BaseModel):
     created_at: datetime
     persons: Optional[List[PersonOutput]] = None
     products: Optional[List[ProductOutput]] = None
-    
-    

@@ -41,9 +41,13 @@ class Maps(Base):
     time_peak_start: Mapped[int] = mapped_column(Integer)
     time_peak_end: Mapped[int] = mapped_column(Integer)
     
-    persons: Mapped[List["Persons"]] = relationship("Persons", back_populates="map")
-    products: Mapped[List['Products']] = relationship('Products', back_populates='map')
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default='now()')    
+    
+    persons = relationship("Persons", back_populates="map")
+    products = relationship("Products", back_populates="map")
+    movements = relationship("PersonMovements", back_populates="map")
+    sales = relationship("Sales", back_populates="map")
+    shelves = relationship("Shelves", back_populates="map")
     
     @staticmethod
     async def create(session: AsyncSession, payload: main_schemas.MapCreate) -> "Maps":
