@@ -12,12 +12,14 @@ class MapCreate(BaseModel):
     x: int = Field(
         ...,
         title="Координата X",
-        example=20
+        example=20,
+        ge=0
     )
     z: int = Field(
         ...,
         title="Координата Z",
-        example=15
+        example=15,
+        ge=0
     )
     
 

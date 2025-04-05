@@ -38,6 +38,8 @@ class Maps(Base):
     x: Mapped[int] = mapped_column(Integer)
     z: Mapped[int] = mapped_column(Integer)
     
+    time_peak_start: Mapped[datetime] = mapped_column(DateTime(timezone=True))
+    time_peak_end: Mapped[datetime] = mapped_column(DateTime(timezone=True))
     
     persons: Mapped[List["Persons"]] = relationship("Persons", back_populates="map")
     products: Mapped[List['Products']] = relationship('Products', back_populates='map')
