@@ -12,7 +12,7 @@ class SimulationCreate(BaseModel):
         ...,
         title="Количество человек",
         example=50,
-        le=10000 
+        le=3000
     )
     
     

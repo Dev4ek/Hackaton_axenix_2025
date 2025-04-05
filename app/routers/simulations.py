@@ -14,13 +14,7 @@ import aiohttp
 
 router_simulations = APIRouter(prefix="/simulations", tags=["Симуляции"])
 
-@router_simulations.get("/analysis/{map_id}")
-async def get_analysis(
-    session: SessionDep,
-    map_id: int,
-):
-    ...
-    
+
 @router_simulations.post("/start")
 async def start_simulation(
     session: SessionDep,
