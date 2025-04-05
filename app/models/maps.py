@@ -54,9 +54,13 @@ class Maps(Base):
     
     @staticmethod
     async def get_by_id(session: AsyncSession, map_id: int) -> Optional["Maps"]:
+        from app.models import Shelves
         stmt = (
             select(Maps)
             .where(Maps.id == map_id)
+            .options(
+                selectinload(Maps.shelves).selectinload(Shelves.products)
+            )
         )
         
         results = await session.execute(stmt)

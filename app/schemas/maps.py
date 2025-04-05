@@ -2,8 +2,8 @@ from datetime import datetime
 from typing import List, Optional
 from pydantic import BaseModel, Field, EmailStr
 
-from app.schemas.persons import PersonOutput
-from app.schemas.products import ProductOutput
+
+from app.schemas import shelves as shelves_schemas
 
 
 class MapBase(BaseModel):
@@ -32,3 +32,12 @@ class MapCreate(MapBase):
 class MapOutput(MapBase):
     id: int
     created_at: datetime
+
+class MapShelves(MapBase):
+    shelves: List[shelves_schemas.ShelfProducts] = Field(
+        [],
+        title="Стелажи",
+    )
+
+
+    
