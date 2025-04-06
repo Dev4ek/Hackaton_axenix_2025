@@ -52,7 +52,7 @@ product_categories = {
 }
 # base_url = "http://localhost:8082"
 base_url = "https://api.melzik.ru"
-map_id = 3
+map_id = 1
 
 # Параметры сетки
 start_x, start_z = 2, 2
@@ -111,7 +111,6 @@ cashier_payload = {
     "name": "Касса 1",
     "map_id": map_id,
     "x": 18,
-    "y": 1,
     "z": 18
 }
 
