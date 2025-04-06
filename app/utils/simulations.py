@@ -747,8 +747,16 @@ async def main(count, store_data, categories_data):
             return obj.tolist()
         return obj
 
+    pon = {}
     for category in categories_data:
-        generator.product_categories[category["name"]] = {"products": category["products"]}
+        # "Фрукты": {"products": [
+        #         "яблоки", "бананы", "груши", "апельсины", "киви",
+        #         "виноград", "мандарины", "ананас", "манго", "гранат"
+        #     ]},
+
+        pon.update({category["name"]: {"products": category["products"]}})
+        
+        generator.product_categories = pon
     
     print(generator.product_categories)
     return json.dumps(results, ensure_ascii=False, indent=2, default=convert_np)
