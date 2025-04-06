@@ -756,8 +756,7 @@ async def main(count, store_data, categories_data):
 
         pon.update({category["name"]: {"products": category["products"]}})
         
-        generator.product_categories = pon
-    
+    generator.product_categories = pon
     print(generator.product_categories)
     return json.dumps(results, ensure_ascii=False, indent=2, default=convert_np)
 
