@@ -33,6 +33,8 @@ async def create_product(
     category = await Categories.get_by_name(session, payload.name)
     if not category:
         raise HTTPException(status_code=404, detail="Категория не найдена")
+    if payload.product_add in category.products:
+        return category
     
     category.products.append(payload.product_add)
     flag_modified(category, "products")  # явно указываем, что поле изменилось
