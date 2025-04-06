@@ -47,7 +47,7 @@ async def create_product(
 
 @router_categories.get(
     "/shevles/{shevle_id}",
-    response_model=categories_schemas.CategoryesOutputOnPolka
+    response_model=categories_schemas.CategoryesOutput
 )
 async def get_categoriese_by_shevles(
     session: SessionDep,
@@ -58,11 +58,5 @@ async def get_categoriese_by_shevles(
     _Categories = await Categories.get_by_name(session, shevel.category)
     if not _Categories:
         raise HTTPException(status_code=404, detail="Категории не найдены")
-    
-    return categories_schemas.CategoryesOutputOnPolka(
-        id=_Categories.id,
-        name=_Categories.name,
-        products=_Categories.products,
-        products_on_polka=shevel.products
-    )
+    return _Categories
 

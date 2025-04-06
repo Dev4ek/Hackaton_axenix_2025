@@ -48,3 +48,5 @@ class ProductOutput(BaseModel):
     time_discount_start: Optional[int] = None
     time_discount_end: Optional[int] = None
    
+
+   
