@@ -21,7 +21,6 @@ async def get_categoriese(
     _Categories = await Categories.get_all(session)
     return _Categories
 
-
 @router_categories.post(
     "/create",
     response_model=categories_schemas.CategoryesOutput

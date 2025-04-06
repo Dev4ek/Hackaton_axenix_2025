@@ -6,9 +6,40 @@ from collections import deque, defaultdict
 from typing import List, Dict
 from pydantic import BaseModel
 
-# Константа для спонтанных покупок
-SPONTANEOUS_BASE_CHANCE = 0.1  # базовая вероятность спонтанной покупки
+# Настройка seed для воспроизводимости
+SPONTANEOUS_BASE_CHANCE = 0.25  # вероятность спонтанной покупки
 
+# Вероятности и бонусы для покупки
+BASE_PURCHASE_CHANCE = 0.15      # немного повышена базовая вероятность покупки
+MOTIVE_BONUS = 0.15              # бонус за мотивацию "дешево" оставляем умеренным
+FEAR_PENALTY = 0.35              # штраф за отсутствие скидок
+DISCOUNT_BONUS = 0.15            # бонус за скидку
+PREFERENCE_BONUS = 0.15          # бонус за совпадение предпочтений
+BUDGET_BONUS_FACTOR = 0.25       # бонус от бюджета оставляем без изменений
+
+# Порог, ниже которого клиент не идёт к полке
+MIN_CHANCE_TO_APPROACH = 0.302  # сниженный порог, чтобы покупка происходила чаще
+
+# Время перемещения и обслуживания
+BLOCK_TIME_SECONDS = 0.5
+OPEN_TIME_SECONDS = 8 * 3600
+CLOSE_TIME_SECONDS = 20 * 3600
+QUEUE_SERVICE_TIME = 8
+
+# Настройки очереди и касс
+MAX_QUEUE_LENGTH_DEFAULT = 5
+KASSA_BREAK_PROB = 0.0002  # вероятность поломки касс
+
+# Масштаб времени симуляции
+SIMULATION_SCALE = 0.000002
+
+# Размер групп клиентов
+GROUP_SIZE_NON_PEAK = 5
+GROUP_SIZE_PEAK = 15
+
+####################################
+#         Классы и генерация      #
+####################################
 class CustomerProfile(BaseModel):
     name: str
     age: int
@@ -21,6 +52,7 @@ class CustomerProfile(BaseModel):
 
 class CustomerGenerator:
     def __init__(self):
+        # Определяем сегменты с весами (сумма должна равняться 1)
         self.segments = [
             {
                 "name": "Молодые семьи с детьми",
@@ -29,14 +61,18 @@ class CustomerGenerator:
                 "preferences": ["Молочные продукты", "Детские товары", "Овощи"],
                 "fears": ["некачественные продукты", "мало ассортимента для детей", "высокие цены"],
                 "budget_allocation": {
-                    "Молочные продукты": 0.20,
-                    "Детские товары": 0.20,
-                    "Овощи": 0.15,
-                    "Крупы": 0.10,
-                    "Лекарства": 0.05,
                     "Готовая еда": 0.10,
+                    "Перекусы": 0.10,
+                    "Энергетики": 0.10,
+                    "Молочные продукты": 0.20,
+                    "Овощи": 0.20,
                     "Сезонные товары": 0.10,
-                    "Перекусы": 0.01,
+                    "Лекарства": 0.20,
+                    "Крупы": 0.20,
+                    "Бытовая химия": 0.15,
+                    "Фрукты": 0.15,
+                    "Детские товары": 0.25,
+                    "Экопродукты": 0.10,
                 }
             },
             {
@@ -46,14 +82,18 @@ class CustomerGenerator:
                 "preferences": ["Готовая еда", "Перекусы", "Энергетики"],
                 "fears": ["очереди", "мало готовой еды", "неудобство"],
                 "budget_allocation": {
-                    "Готовая еда": 0.35,
-                    "Перекусы": 0.25,
+                   "Готовая еда": 0.20,
+                    "Перекусы": 0.20,
                     "Энергетики": 0.20,
-                    "Молочные продукты": 0.05,
+                    "Молочные продукты": 0.10,
                     "Овощи": 0.10,
                     "Сезонные товары": 0.10,
                     "Лекарства": 0.10,
-                    "Крупы": 0.01,
+                    "Крупы": 0.10,
+                    "Бытовая химия": 0.10,
+                    "Фрукты": 0.10,
+                    "Детские товары": 0.01,
+                    "Экопродукты": 0.10,
                 }
             },
             {
@@ -63,11 +103,18 @@ class CustomerGenerator:
                 "preferences": ["Крупы", "Молочные продукты", "Овощи"],
                 "fears": ["непонятные акции", "физические сложности", "нет скидок"],
                 "budget_allocation": {
-                    "Крупы": 0.30,
-                    "Молочные продукты": 0.25,
+                    "Готовая еда": 0.10,
+                    "Перекусы": 0.10,
+                    "Энергетики": 0.01,
+                    "Молочные продукты": 0.20,
                     "Овощи": 0.20,
+                    "Сезонные товары": 0.20,
                     "Лекарства": 0.30,
-                    "Сезонные товары": 0.05,
+                    "Крупы": 0.20,
+                    "Бытовая химия": 0.10,
+                    "Фрукты": 0.20,
+                    "Детские товары": 0.20,
+                    "Экопродукты": 0.20,
                 }
             },
             {
@@ -77,12 +124,18 @@ class CustomerGenerator:
                 "preferences": ["Экопродукты", "Перекусы", "Энергетики"],
                 "fears": ["нет новинок", "неприкольный магазин", "мало фишек"],
                 "budget_allocation": {
-                    "Экопродукты": 0.15,
-                    "Перекусы": 0.15,
-                    "Энергетики": 0.15,
+                    "Готовая еда": 0.20,
+                    "Перекусы": 0.20,
+                    "Энергетики": 0.20,
                     "Молочные продукты": 0.10,
                     "Овощи": 0.10,
-                    "Сезонные товары": 0.10,
+                    "Сезонные товары": 0.15,
+                    "Лекарства": 0.10,
+                    "Крупы": 0.10,
+                    "Бытовая химия": 0.10,
+                    "Фрукты": 0.10,
+                    "Детские товары": 0.00,
+                    "Экопродукты": 0.20,
                 }
             },
             {
@@ -92,16 +145,24 @@ class CustomerGenerator:
                 "preferences": ["Крупы", "Бытовая химия", "Овощи"],
                 "fears": ["дорого", "мало товара", "нет доставки"],
                 "budget_allocation": {
-                    "Крупы": 0.35,
-                    "Бытовая химия": 0.15,
-                    "Овощи": 0.20,
+                   "Готовая еда": 0.10,
+                    "Перекусы": 0.10,
+                    "Энергетики": 0.10,
                     "Молочные продукты": 0.10,
-                    "Лекарства": 0.05,
-                    "Готовая еда": 0.05,
-                    "Сезонные товары": 0.10,
+                    "Овощи": 0.10,
+                    "Сезонные товары": 0.20,
+                    "Лекарства": 0.20,
+                    "Крупы": 0.20,
+                    "Бытовая химия": 0.20,
+                    "Фрукты": 0.10,
+                    "Детские товары": 0.10,
+                    "Экопродукты": 0.10,
                 }
             },
         ]
+        # Задаём веса для выбора сегмента (сумма весов = 1)
+        self.segment_weights = [0.2, 0.4, 0.2, 0.1, 0.1]
+
         self.product_categories = {
             "Молочные продукты": {"products": [
                 "молоко", "сыр", "творог", "сливки", "йогурты",
@@ -152,13 +213,20 @@ class CustomerGenerator:
             ]}
         }
 
+    def generate_age(self, age_range):
+        # Реалистичное распределение возраста: центр + нормальное отклонение
+        center = (age_range[0] + age_range[1]) / 2
+        std = (age_range[1] - age_range[0]) / 6
+        age = int(np.random.normal(center, std))
+        return max(age_range[0], min(age_range[1], age))
+
     async def generate_preferences(self, segment, budget):
         await asyncio.sleep(0)
         preferences = []
         for category, allocation in budget.items():
             if allocation < 0.05:
                 continue
-            variance = random.uniform(0.8, 1.2)
+            variance = random.uniform(0.8, 1.3)
             adjusted_allocation = allocation * variance
             if category in segment["preferences"]:
                 products = self.product_categories[category]["products"]
@@ -172,13 +240,21 @@ class CustomerGenerator:
 
     async def generate_customer(self, i: int) -> Dict:
         await asyncio.sleep(0)
-        segment = random.choice(self.segments)
-        age = random.randint(*segment["age_range"])
+        # Выбор сегмента с учетом весов
+        segment = random.choices(self.segments, weights=self.segment_weights, k=1)[0]
+        age = self.generate_age(segment["age_range"])
         name = f"Клиент_{i + 1}"
-        motives = random.sample(segment["motives"], k=min(2, len(segment["motives"])))
-        fears = random.sample(segment["fears"], k=min(2, len(segment["fears"])))
+        # Динамическая генерация мотивов и страхов
+        motives = random.sample(segment["motives"], k=random.randint(1, min(3, len(segment["motives"]))))
+        fears = random.sample(segment["fears"], k=random.randint(1, min(3, len(segment["fears"]))))
         preferences = await self.generate_preferences(segment, segment["budget_allocation"])
-        shopping_list_size = random.randint(5, 12)
+        # Размер списка покупок зависит от сегмента
+        if segment["name"] == "Работающие люди":
+            shopping_list_size = random.randint(4, 8)
+        elif segment["name"] == "Молодые семьи с детьми":
+            shopping_list_size = random.randint(7, 14)
+        else:
+            shopping_list_size = random.randint(5, 12)
         shopping_list = random.sample(preferences, k=min(len(preferences), shopping_list_size))
         customer = CustomerProfile(
             name=name,
@@ -197,30 +273,9 @@ class CustomerGenerator:
         customers = await asyncio.gather(*tasks)
         return customers
 
-
-###############################
-#   CONSTANTS AND UTILITIES   #
-###############################
-BLOCK_TIME_SECONDS = 0.6
-OPEN_TIME_SECONDS = 8 * 3600
-CLOSE_TIME_SECONDS = 20 * 3600
-QUEUE_SERVICE_TIME = 10
-MAX_QUEUE_LENGTH_DEFAULT = 5
-BASE_PURCHASE_CHANCE = 0.214
-MOTIVE_BONUS = 0.4
-FEAR_PENALTY = 0.3
-DISCOUNT_BONUS = 0.2
-MIN_CHANCE_TO_APPROACH = 0.3
-PREFERENCE_BONUS = 0.1
-BUDGET_BONUS_FACTOR = 0.2
-KASSA_BREAK_PROB = 0.0039 * random.random()
-SIMULATION_SCALE = 0.000001
-GROUP_SIZE_NON_PEAK = 7
-GROUP_SIZE_PEAK = 20
-
-###############################
-#   BFS: КРАТЧАЙШИЙ МАРШРУТ   #
-###############################
+####################################
+#         Вспомогательные функции #
+####################################
 def bfs_path(grid_width, grid_height, start, end, occupied_positions):
     if start == end:
         return [start]
@@ -253,10 +308,6 @@ def bfs_path(grid_width, grid_height, start, end, occupied_positions):
 def manhattan_distance(p1, p2):
     return abs(p1[0] - p2[0]) + abs(p1[1] - p2[1])
 
-
-###############################
-#   STEP-BY-STEP MOVEMENT     #
-###############################
 def move_along_path(path_cells, current_time, current_occupied, cell_visits,
                     grid_width, grid_height,
                     block_time=BLOCK_TIME_SECONDS, close_time=CLOSE_TIME_SECONDS):
@@ -289,18 +340,14 @@ def move_along_path(path_cells, current_time, current_occupied, cell_visits,
         i += 1
     return position, current_time, "ok", path_log
 
-
-###############################
-#      StoreSimulation        #
-###############################
+####################################
+#         Симуляция магазина     #
+####################################
 class StoreSimulation:
     def __init__(self, store_schema, max_queue_length=MAX_QUEUE_LENGTH_DEFAULT,
                  grid_width=20, grid_height=20):
         self.store_schema = store_schema
-        # При загрузке магазина учитываем размеры полок: 
-        # если указаны "width" и "depth" (иначе по умолчанию width=3, depth=1)
         self.shelves, self.kasses, self.item_map = self.load_store(store_schema)
-        # Собираем данные для полок (учитывая их занимаемые клетки)
         self.shelf_info = {}
         for shelf in store_schema['shelves']:
             x = shelf['x']
@@ -308,7 +355,7 @@ class StoreSimulation:
             width = shelf.get("width", 3)
             depth = shelf.get("depth", 1)
             cells = [(x + i, z + j) for i in range(width) for j in range(depth)]
-            self.shelf_info[tuple(cells[0])] = {   # используем верхнюю левую клетку как идентификатор
+            self.shelf_info[tuple(cells[0])] = {
                 "category": shelf.get("category"),
                 "attraction": shelf.get("attraction", 0.5),
                 "products": shelf.get("products", []),
@@ -318,7 +365,6 @@ class StoreSimulation:
         self.grid_height = grid_height
         self.max_queue_length = max_queue_length
         self.base_occupied_positions = set()
-        # Все клетки, занятые полками
         for shelf in store_schema['shelves']:
             x = shelf['x']
             z = shelf['z']
@@ -331,7 +377,6 @@ class StoreSimulation:
             self.base_occupied_positions.add((kassa['x'], kassa['z']))
         self.queues = [[] for _ in self.kasses]
         self.cell_visits = defaultdict(int)
-        # Для статистики по полкам – будем агрегировать по всем занимаемым клеткам
         self.shelf_purchases = defaultdict(int)
         self.global_stats = {
             "total_purchases": 0,
@@ -354,7 +399,6 @@ class StoreSimulation:
         shelves = {}
         kasses = []
         item_map = {}
-        # Для каждой полки рассчитываем список клеток, которые она занимает
         for shelf in store_schema['shelves']:
             cat = shelf['category']
             x = shelf['x']
@@ -362,7 +406,7 @@ class StoreSimulation:
             width = shelf.get("width", 3)
             depth = shelf.get("depth", 1)
             cells = [(x + i, z + j) for i in range(width) for j in range(depth)]
-            shelves[cat] = cells  # сохраняем список клеток
+            shelves[cat] = cells
             if 'products' in shelf:
                 for product in shelf['products']:
                     product_info = {
@@ -372,7 +416,6 @@ class StoreSimulation:
                         "time_discount_start": product.get('time_discount_start'),
                         "time_discount_end": product.get('time_discount_end')
                     }
-                    # Сохраняем основную клетку (верхнюю левую) и список клеток для полки
                     item_map[product['name'].lower()] = (cat, cells, product_info)
         for kassa in store_schema['kasses']:
             kasses.append((kassa['x'], kassa['z']))
@@ -431,14 +474,12 @@ class StoreSimulation:
             if item_lower not in self.item_map:
                 continue
             cat, shelf_cells, product_info = self.item_map[item_lower]
-            # Для оценки качества полки вычисляем среднее посещений по всем клеткам
             visits = sum(self.cell_visits.get(cell, 0) for cell in shelf_cells) / len(shelf_cells)
             shelf_quality = 0.7 if visits < 5 else 1.0
             chance = self.compute_purchase_chance(client, cat, product_info, shelf_quality)
             if chance < MIN_CHANCE_TO_APPROACH:
                 continue
             async with self.state_lock:
-                # Выбираем целевую клетку для полки (например, верхнюю левую)
                 target_cell = shelf_cells[0]
                 path_cells = bfs_path(self.grid_width, self.grid_height, position, target_cell, self.current_occupied)
                 if not path_cells:
@@ -460,7 +501,6 @@ class StoreSimulation:
             purchases_log.append(purchase_record)
             if purchased:
                 self.global_stats["total_purchases"] += 1
-                # При покупке увеличиваем счетчик для всех клеток полки
                 for cell in shelf_cells:
                     self.shelf_purchases[cell] += 1
                 path_log[-1]["purchase_item"] = item
@@ -471,9 +511,8 @@ class StoreSimulation:
                 path_log[-1]["purchase_chance"] = round(chance, 3)
                 path_log[-1]["event"] += f"; DID_NOT_BUY: {item}"
 
-            # Спонтанные покупки для соседних полок (если проходит мимо)
+            # Спонтанные покупки для соседних полок
             for shelf_coords, shelf_data in self.shelf_info.items():
-                # Если это та же полка – пропускаем
                 if shelf_coords == shelf_cells[0]:
                     continue
                 if manhattan_distance(position, shelf_coords) == 1:
@@ -555,64 +594,6 @@ class StoreSimulation:
         if status == "completed":
             self.global_stats["completed"] += 1
         return {"client": client['name'], "path": path_log, "purchases": purchases_log, "end_time": current_time, "status": status}
-
-    def generate_recommendations(self, stats, popular_zones):
-        recommendations = []
-        if stats["left_due_to_queue"] > 0:
-            recommendations.append("Некоторые клиенты уходят из-за очереди на кассе. Рекомендуется увеличить длину очереди или добавить дополнительную кассу.")
-        if stats["kassa_breakdowns"] > 0:
-            recommendations.append("Обнаружены сбои в работе касс. Проверьте оборудование или распределение нагрузки.")
-        
-        shelf_statistics = {}
-        total_visits = 0
-        total_purchases = 0
-        shelf_count = 0
-        # Для каждой полки вычисляем суммарные посещения и покупки по всем занимаемым клеткам
-        for shelf in self.store_schema.get("shelves", []):
-            x = shelf["x"]
-            z = shelf["z"]
-            width = shelf.get("width", 3)
-            depth = shelf.get("depth", 1)
-            cells = [(x + i, z + j) for i in range(width) for j in range(depth)]
-            visits = sum(self.cell_visits.get(cell, 0) for cell in cells)
-            purchases = sum(self.shelf_purchases.get(cell, 0) for cell in cells)
-            conversion = (purchases / visits) if visits > 0 else 0
-            shelf_statistics[str(cells[0])] = {
-                "category": shelf["category"],
-                "cells": cells,
-                "visits": visits,
-                "purchases": purchases,
-                "conversion_rate": round(conversion, 3)
-            }
-            total_visits += visits
-            total_purchases += purchases
-            shelf_count += 1
-
-        average_visits = total_visits / shelf_count if shelf_count > 0 else 0
-
-        # Генерируем рекомендации по полкам
-        for shelf in self.store_schema.get("shelves", []):
-            x = shelf["x"]
-            z = shelf["z"]
-            width = shelf.get("width", 3)
-            depth = shelf.get("depth", 1)
-            cells = [(x + i, z + j) for i in range(width) for j in range(depth)]
-            visits = sum(self.cell_visits.get(cell, 0) for cell in cells)
-            purchases = sum(self.shelf_purchases.get(cell, 0) for cell in cells)
-            conversion = (purchases / visits) if visits > 0 else 0
-            products = shelf.get("products", [])
-            avg_discount = sum((p.get("percent_discount") or 0) for p in products) / len(products) if products else 0
-
-            if visits < 0.5 * average_visits or conversion < 0.1:
-                msg = f"Полка '{shelf['category']}' на {cells} имеет низкую посещаемость ({visits} посещений) и конверсию {conversion:.1%}"
-                if avg_discount > 20:
-                    msg += f", несмотря на высокие скидки (средняя скидка {avg_discount:.0f}%). Возможно, стоит изменить расположение или усилить акции."
-                else:
-                    msg += ". Рассмотрите изменение расположения или усиление акций для повышения интереса."
-                recommendations.append(msg)
-            elif conversion > (total_purchases / total_visits) * 1.5 and visits > average_visits:
-                recommendations.append(f"Полка '{shelf['category']}' на {cells} показывает высокую конверсию ({conversion:.1%}). Рассмотрите возможность использования её в качестве якорной зоны.")
-        return recommendations
 
     async def simulate_clients(self, clients):
         total_clients = len(clients)
@@ -698,6 +679,58 @@ class StoreSimulation:
             "recommendations": recommendations
         }
 
+    def generate_recommendations(self, stats, popular_zones):
+        recommendations = []
+        if stats["left_due_to_queue"] > 0:
+            recommendations.append("Некоторые клиенты уходят из-за очереди на кассе. Рекомендуется увеличить длину очереди или добавить дополнительную кассу.")
+        if stats["kassa_breakdowns"] > 0:
+            recommendations.append("Обнаружены сбои в работе касс. Проверьте оборудование или распределение нагрузки.")
+        shelf_statistics = {}
+        total_visits = 0
+        total_purchases = 0
+        shelf_count = 0
+        for shelf in self.store_schema.get("shelves", []):
+            x = shelf["x"]
+            z = shelf["z"]
+            width = shelf.get("width", 3)
+            depth = shelf.get("depth", 1)
+            cells = [(x + i, z + j) for i in range(width) for j in range(depth)]
+            visits = sum(self.cell_visits.get(cell, 0) for cell in cells)
+            purchases = sum(self.shelf_purchases.get(cell, 0) for cell in cells)
+            conversion = (purchases / visits) if visits > 0 else 0
+            shelf_statistics[str(cells[0])] = {
+                "category": shelf["category"],
+                "cells": cells,
+                "visits": visits,
+                "purchases": purchases,
+                "conversion_rate": round(conversion, 3)
+            }
+            total_visits += visits
+            total_purchases += purchases
+            shelf_count += 1
+        average_visits = total_visits / shelf_count if shelf_count > 0 else 0
+        for shelf in self.store_schema.get("shelves", []):
+            x = shelf["x"]
+            z = shelf["z"]
+            width = shelf.get("width", 3)
+            depth = shelf.get("depth", 1)
+            cells = [(x + i, z + j) for i in range(width) for j in range(depth)]
+            visits = sum(self.cell_visits.get(cell, 0) for cell in cells)
+            purchases = sum(self.shelf_purchases.get(cell, 0) for cell in cells)
+            conversion = (purchases / visits) if visits > 0 else 0
+            products = shelf.get("products", [])
+            avg_discount = sum((p.get("percent_discount") or 0) for p in products) / len(products) if products else 0
+            if visits < 0.5 * average_visits or conversion < 0.1:
+                msg = f"Полка '{shelf['category']}' на {cells} имеет низкую посещаемость ({visits} посещений) и конверсию {conversion:.1%}"
+                if avg_discount > 20:
+                    msg += f", несмотря на высокие скидки (средняя скидка {avg_discount:.0f}%). Возможно, стоит изменить расположение или усилить акции."
+                else:
+                    msg += ". Рассмотрите изменение расположения или усиление акций для повышения интереса."
+                recommendations.append(msg)
+            elif conversion > (total_purchases / total_visits) * 1.5 and visits > average_visits:
+                recommendations.append(f"Полка '{shelf['category']}' на {cells} показывает высокую конверсию ({conversion:.1%}). Рассмотрите возможность использования её в качестве якорной зоны.")
+        return recommendations
+    
 ###################################
 # Пример запуска
 ###################################
