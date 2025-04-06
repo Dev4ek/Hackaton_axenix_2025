@@ -1,6 +1,7 @@
 import random
 from typing import List, Optional
 from sqlalchemy import (
+    ARRAY,
     Float,
     ForeignKey,
     String,
@@ -27,6 +28,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from typing import TYPE_CHECKING
 from datetime import datetime, timedelta
 from app.schemas import products as products_schemas
+from sqlalchemy.dialects.postgresql import JSONB
 
 if TYPE_CHECKING:
     from app.models import Maps, Shelves, Sales
@@ -77,4 +79,5 @@ class Products(Base):
         )
         result = await session.execute(stmt)
         return result.scalars().all()
+    
     

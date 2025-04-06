@@ -7,7 +7,7 @@ from app.schemas import persons as persons_schemas
 
 router_persons = APIRouter(prefix="/persons", tags=["Люди"])
 
-@router_persons.get(
+@router_persons.post(
     "",
     response_model=List[persons_schemas.PersonOutput]
 )

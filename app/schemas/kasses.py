@@ -16,7 +16,6 @@ class KassesBase(BaseModel):
     map_id: int = Field(
         ...,
         title="Идентификатор карты",
-        example=1
     )
     x: float = Field(
         ...,

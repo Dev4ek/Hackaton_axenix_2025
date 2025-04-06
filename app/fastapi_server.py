@@ -10,7 +10,7 @@ from fastapi.openapi.utils import get_openapi
 from sqlalchemy.orm import Session
 from fastapi.staticfiles import StaticFiles
 
-from app.routers import router_maps, router_products,  router_simulations, router_shelves, router_kasses
+from app.routers import router_maps, router_products,  router_simulations, router_shelves, router_kasses, router_categories
 
 app = FastAPI(
     title="Hackaton",
@@ -34,6 +34,7 @@ app.add_middleware(
 app.include_router(router_maps)
 app.include_router(router_shelves)
 app.include_router(router_products)
+app.include_router(router_categories )
 app.include_router(router_kasses)
 app.include_router(router_simulations)
 

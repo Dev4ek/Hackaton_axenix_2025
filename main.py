@@ -8,6 +8,7 @@ import os
 import sys
 
 async def main():
+    database.create_tables()
     await start_uvicorn(),
 
 if __name__ == "__main__":
