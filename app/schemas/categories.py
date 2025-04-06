@@ -17,3 +17,9 @@ class CreateCategoryProduct(BaseModel):
     name: str
     product_add: str    
     
+    
+class CategoryesOutputOnPolka(BaseModel):
+    id: int
+    name: str
+    products: list
+    products_on_polka: list

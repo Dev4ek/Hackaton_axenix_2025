@@ -68,4 +68,4 @@ for z in range(20):
         if grid[z, x] > 0:
             plt.text(x, z, int(grid[z, x]), ha='center', va='center', fontsize=8, color='black')
 
-plt.show()wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+plt.show()
