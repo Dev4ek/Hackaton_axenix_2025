@@ -114,7 +114,7 @@ cashier_payload = {
     "z": 18
 }
 
-cashier_response = requests.post(f"{base_url}/shelves", json=cashier_payload)
+cashier_response = requests.post(f"{base_url}/kasses", json=cashier_payload)
 if cashier_response.status_code in (200, 201):
     print("Касса успешно добавлена.")
 else:

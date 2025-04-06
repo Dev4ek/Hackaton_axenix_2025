@@ -1,69 +1,57 @@
-import math
-import random
 import requests
 
-# Новый набор категорий и товаров
-new_product_categories = {
-    "Напитки": {"weight": 1.0, "products": [
-        "вода", "сок", "лимонад", "энергетик", "чай", "кофе"
-    ]},
-    "Снэки": {"weight": 0.8, "products": [
-        "чипсы", "сухарики", "орешки", "попкорн", "сухофрукты"
-    ]},
-    "Замороженные продукты": {"weight": 0.6, "products": [
-        "мороженое", "замороженные овощи", "замороженное мясо", "пельмени", "пицца"
-    ]},
-    "Выпечка": {"weight": 0.7, "products": [
-        "хлеб", "булочки", "круассаны", "пирожные", "кексы"
-    ]},
-    "Косметика": {"weight": 0.5, "products": [
-        "шампунь", "мыло", "лосьон", "крем", "маска для лица"
-    ]}
+# Категории с продуктами (пример реальных товаров)
+product_categories = {
+    "Сезонные товары": {
+        "weight": 1.0,
+        "products": ["арбуз", "клубника", "черешня", "яблоко", "апельсин"]
+    },
+    "Фрукты": {
+        "weight": 0.8,
+        "products": ["бананы", "киви", "виноград", "манго", "груша"]
+    },
+    "Перекусы": {
+        "weight": 0.6,
+        "products": ["чипсы", "сухарики", "орешки", "сухофрукты", "печенье"]
+    },
+    "Лекарства": {
+        "weight": 0.7,
+        "products": ["парацетамол", "ибупрофен", "аспирин", "витамины", "противогриппозные средства"]
+    },
+    "Готовая еда": {
+        "weight": 0.5,
+        "products": ["пельмени", "замороженная пицца", "суп", "котлета", "блины"]
+    }
 }
 
 base_url = "https://api.melzik.ru"
-map_id = 2
+map_id = 3
 
-# Параметры для сетки магазина 20x20
-grid_size = 20
-num_categories = len(new_product_categories)
-grid_width = 3  # число стеллажей по горизонтали
-num_rows = math.ceil(num_categories / grid_width)
+# Задаём позиции для стеллажей, подобранные вручную
+# (x, z) гарантированно в пределах 20x20 и имитируют реалистичное расположение:
+# например, стеллажи у входа (фронт) и в глубине магазина (задняя часть)
+shelf_positions = {
+    "Сезонные товары": (3, 3),   # возле входа
+    "Фрукты": (10, 3),           # центральная зона передней части
+    "Перекусы": (17, 3),         # правый угол передней части
+    "Лекарства": (5, 17),        # левая задняя часть
+    "Готовая еда": (15, 17)      # правая задняя часть
+}
 
-# Задаём отступ от границ
-start_x, start_z = 2, 2
-
-# Вычисляем шаг по оси x так, чтобы максимальное значение не превышало grid_size
-if grid_width > 1:
-    step_x = (grid_size - start_x) / (grid_width - 1)
-else:
-    step_x = 0
-
-# Аналогично по оси z
-if num_rows > 1:
-    step_z = (grid_size - start_z) / (num_rows - 1)
-else:
-    step_z = 0
-
-# Вычисляем позиции для каждого стеллажа
-positions = []
-for i in range(num_categories):
-    row = i // grid_width
-    col = i % grid_width
-    x = start_x + col * step_x
-    z = start_z + row * step_z
-    positions.append((x, z))
-
-# Расстановка стеллажей с новыми категориями
-for (i, (category_name, category_data)) in enumerate(new_product_categories.items()):
-    x, z = positions[i]
+# Создаём стеллажи и добавляем товары для каждой категории
+for category_name, category_data in product_categories.items():
+    # Получаем позицию для данной категории
+    if category_name not in shelf_positions:
+        print(f"Нет позиции для категории '{category_name}'")
+        continue
+    x, z = shelf_positions[category_name]
     
     shelf_payload = {
         "name": category_name,
         "map_id": map_id,
-        "capacity": 15,  # увеличена вместимость
+        "capacity": 15,
         "category": category_name,
-        "color_hex": "#00FF00",  # изменён цвет для наглядности
+        "color_hex": "#00FF00",  # для стеллажей выбран зеленый цвет
         "x": x,
         "y": 1,
         "z": z
@@ -75,12 +63,12 @@ for (i, (category_name, category_data)) in enumerate(new_product_categories.item
         shelf_id = shelf_response.json().get("id")
         print(f"Стеллаж '{category_name}' создан. ID = {shelf_id}.")
         
-        # Добавление товаров для этой категории
+        # Добавляем товары в созданный стеллаж
         for product_name in category_data["products"]:
             product_payload = {
                 "name": product_name,
                 "shelf_id": shelf_id,
-                "color_hex": "#0000FF",  # другой цвет для товаров
+                "color_hex": "#0000FF",  # для товаров выбран синий цвет
                 "percent_discount": None,
                 "time_discount_start": None,
                 "time_discount_end": None
@@ -93,15 +81,15 @@ for (i, (category_name, category_data)) in enumerate(new_product_categories.item
     else:
         print(f"Ошибка при создании стеллажа '{category_name}': {shelf_response.text}")
 
-# Добавление кассы с изменёнными координатами (убедимся, что координаты кассы тоже внутри 20x20)
+# Добавление кассы (расположим ее, например, в центре магазина)
 cashier_payload = {
     "name": "Касса 1",
     "map_id": map_id,
-    "x": 15,  # подобрано значение, чтобы быть в пределах сетки
-    "z": 15
+    "x": 10,
+    "z": 10
 }
 
-cashier_response = requests.post(f"{base_url}/shelves", json=cashier_payload)
+cashier_response = requests.post(f"{base_url}/kasses", json=cashier_payload)
 if cashier_response.status_code in (200, 201):
     print("Касса успешно добавлена.")
 else:
