@@ -11,6 +11,7 @@ from app.schemas import simulations as simulations_schemas
 from app.schemas import persons as persons_schemas
 from app.utils.simulations import main
 import aiohttp
+from app.models import Categories
 
 router_simulations = APIRouter(prefix="/simulations", tags=["Симуляции"])
 
@@ -25,8 +26,8 @@ async def start_simulation(
         raise HTTPException(status_code=404, detail="Карта не найдена")
     
     json_data = None
-    async with aiohttp.ClientSession() as session:
-        async with session.get(f"http://localhost:8082/maps/{payload.map_id}/full") as response:
+    async with aiohttp.ClientSession() as session_request:
+        async with session_request.get(f"http://localhost:8082/maps/{payload.map_id}/full") as response:
             # Проверяем, что запрос успешен (HTTP 200)
             if response.status == 200:
                 json_data = await response.json()
@@ -36,6 +37,11 @@ async def start_simulation(
         raise HTTPException(status_code=500, detail="Ошибка получения информации о мапе json_data")
     
     json_data['kasses'] = json_data['kassses']
-    results = await main(payload.num_persons, json_data)
+    categories_all = await Categories.get_all(session)
+    
+    list_category = []
+    for category in categories_all:
+        list_category.append({"name": category.name, "products": category.products})
+    results = await main(payload.num_persons, json_data, list_category)
     return json.loads(results)
     
