@@ -746,7 +746,6 @@ async def main(count, store_data, categories_data):
         if isinstance(obj, np.ndarray):
             return obj.tolist()
         return obj
-    
 
     for category in categories_data:
         generator.product_categories[category["name"]] = {"products": category["products"]}
@@ -757,4 +756,5 @@ async def main(count, store_data, categories_data):
 if __name__ == '__main__':
     with open('/home/milaha/Документы/Hackaton_axenix_2025/app/utils/kassas_updated.json', encoding='utf-8') as f:
         store_data = json.load(f)
+        
     asyncio.run(main(150, store_data))
